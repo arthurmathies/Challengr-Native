@@ -2,6 +2,7 @@
 
 var React = require('react-native');
 var _ = require('lodash');
+var { Icon } = require('react-native-icons');
 
 var {
   StyleSheet,
@@ -16,6 +17,8 @@ var {
 
 var API = require('../../../api/challenges/challenges');
 var DetailChallenge = require('../detailChallenge');
+var ListChallenge = require('../listChallenge');
+var Settings = require('./settings');
 
 var Profile = React.createClass({
 
@@ -31,6 +34,7 @@ var Profile = React.createClass({
           firstName: valArr[2][1],
           lastName: valArr[3][1],
           photoURL: valArr[4][1],
+          token: valArr[5][1],
         });
         var token = valArr[5][1];
         // API
@@ -51,6 +55,7 @@ var Profile = React.createClass({
   getInitialState: function(){
     return {
       isLoading: false,
+      token: '',
       email: '',
       firstName: '',
       lastName: '',
@@ -71,69 +76,82 @@ var Profile = React.createClass({
   },
 
   profileInfo: function(){
-    // Needs to be configured
-    var image = `../../..${this.state.photoURL}`;
+
     var fName = _.capitalize(this.state.firstName);
     var lName = _.capitalize(this.state.lastName);
 
     return ( 
-      <View style={styles.header}>
-        <View style={styles.headerLeft}>
-          
-        </View>
+      <View style={styles.header}>      
+        <TouchableHighlight
+          style={styles.headerLeft}
+          onPress={this._userSettings}
+          underlayColor={'transparent'}>
+          <Icon
+            name='material|settings'
+            size={30}
+            color='#333333'
+            style={{width: 30, height: 30}}
+          />
+        </TouchableHighlight> 
         <View style={styles.headerMiddle}>
           <Image 
             style={styles.photo}
-            source={require('../../../image/placeholder.png')} />
+            source={{uri: this.state.photoURL}} />
           <Text style={styles.profileText}>{fName} {lName}</Text>
         </View>
-        <View style={styles.headerRight}>
-          
-        </View>
+        <TouchableHighlight 
+          style={styles.headerRight}
+          onPress={this._changePhoto}
+          underlayColor={'transparent'}>
+          <Icon
+            name='material|plus'
+            size={30}
+            color='#333333'
+            style={{width: 30, height: 30}}
+          />
+        </TouchableHighlight>
       </View>
     )
+  },
+
+  _userSettings: function(){
+    var userObj = {
+      email: this.state.email,
+      firstName: this.state.firstName,
+      lastName: this.state.lastName,
+      photoURL: this.state.photoURL,
+    }
+    // go to user settings view
+    this.props.navigator.push({
+      title: 'Settings',
+      component: Settings,
+      passProps: {user: userObj}
+    });
+  },
+
+  _changePhoto: function(){
+    // access the camera to change profile image
   },
 
   userChallenges: function(){
     return (      
       <ListView
+        ref="listview"
+        style={styles.footer}
         renderSeparator={this._renderSeparator}
         automaticallyAdjustContentInsets={false}
-        style={styles.footer}
         dataSource={this.state.dataSource}
         renderFooter={this._renderFooter}
         renderRow={this._renderRow}
       />
-    )
+    );
   },
 
   _renderRow: function(rowData){
-    return (
-      <TouchableHighlight 
-        onPress={() => this._showDetailView(rowData)}
-        key={rowData.id}
-        underlayColor='transparent'
-        style={styles.row}>
-        <View style={styles.rowContainer}>
-          <View style={styles.leftRow}>
-            <Image 
-              style={styles.rowPhoto}
-              source={require('../../../image/placeholder.png')} />
-          </View>
-          <View style={styles.rightRow}>
-            <View style={styles.rowData}>
-              <Text style={styles.rowDataTitle}>{rowData.title}</Text>
-              <Text style={styles.rowDataDescription}>{rowData.description}</Text>
-            </View>
-            <View style={styles.rowSocial}>
-              <Text style={styles.rowSocialText}>{rowData.charityAmount}</Text>
-              <Text style={styles.rowSocialText}>{rowData.likes}</Text>
-              <Text style={styles.rowSocialText}>{rowData.issuedDate}</Text>
-            </View>
-          </View>
-        </View>
-      </TouchableHighlight>
-    )
+    return <ListChallenge 
+              rowData={rowData}
+              showDetailView={this._showDetailView}
+              token={this.state.token} />
   },
 
   _showDetailView: function(challenge){
@@ -187,6 +205,8 @@ var styles = StyleSheet.create({
     borderRadius: 25,
     marginBottom: 30,
     backgroundColor: 'white',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   headerMiddle: {
     alignItems: 'center',
@@ -198,6 +218,8 @@ var styles = StyleSheet.create({
     borderRadius: 25,
     marginBottom: 30,
     backgroundColor: 'white',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   photo: {
     width: 110,
@@ -212,55 +234,13 @@ var styles = StyleSheet.create({
 
   // Footer/List View
   footer: {
-    padding: 10,
     flex: 2,
     marginBottom: 50,
-  },
-  row: {
-    marginBottom: 5,
-    marginTop: 5,
   },
   separator: {
     backgroundColor: 'rgba(216, 216, 216, 1)',
     height: 1,
     marginLeft: 80,
-  },
-  rowContainer: {
-    flexDirection: 'row',
-  },
-  rowPhoto: {
-    width: 66,
-    height: 66,
-    borderRadius: 33,
-  },
-  // title & description
-  rowData: {
-
-  },
-  rowDataTitle: {
-    color: '#546979',
-    fontSize: 18,
-  },
-  rowDataDescription: {
-    color: '#546979',
-    fontSize: 16,
-  },
-  // likes, time, charity amount
-  rowSocial:{
-    flexDirection: 'row',
-    justifyContent: 'space-between'
-  },
-  rowSocialText:{
-    color: '#546979',
-    fontSize: 14,
-  },
-  leftRow: {
-    flex: 1,
-    alignSelf: 'center',
-  },
-  rightRow: {
-    flex: 4,
-    alignSelf: 'center',
   }
 });
 

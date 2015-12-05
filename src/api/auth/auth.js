@@ -13,7 +13,7 @@ var AuthAPI = {
         password: password,
       });
     
-    return API.fetchJSON(signinURL, 'POST', userObj)      
+    return API.postJSON(signinURL, 'POST', userObj)      
       .then(function(json){
         return json;
       })
@@ -30,7 +30,7 @@ var AuthAPI = {
         password: password,
       });
     
-    return API.fetchJSON(signupURL, 'POST', userObj)      
+    return API.postJSON(signupURL, 'POST', userObj)      
       .then(function(json){
         return json;
       })

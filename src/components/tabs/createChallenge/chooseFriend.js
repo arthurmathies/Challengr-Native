@@ -92,7 +92,7 @@ var ChooseFriend = React.createClass({
           <View style={styles.leftRow}>
             <Image 
               style={styles.rowPhoto}
-              source={require('../../../image/placeholder.png')} />
+              source={{uri: friend.photoURL}} />
           </View>
           <View style={styles.rightRow}>
             <Text>{friend.firstName} {friend.lastName}</Text>
@@ -130,7 +130,6 @@ var ChooseFriend = React.createClass({
   },
 
 });
-
 
 var styles = StyleSheet.create({
   container: {
@@ -181,6 +180,5 @@ var styles = StyleSheet.create({
   }
 
 });
-
 
 module.exports = ChooseFriend;

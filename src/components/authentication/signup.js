@@ -1,4 +1,7 @@
 var React = require('react-native');
+var Dimensions = require('Dimensions');
+var {width, height} = Dimensions.get('window');
+var { Icon } = require('react-native-icons');
 
 var {
   Text,
@@ -28,42 +31,75 @@ module.exports = React.createClass({
     return (
       <View style={styles.container}>
 
-        <Text>Create Account</Text>
+        <View style={styles.footer}>
+          <Text>{this.state.errorMessage}</Text>
 
-        <Text>{this.state.errorMessage}</Text>
+          <View style={styles.iconContainer}>
+            <Icon
+              name='material|account-o'
+              size={30}
+              color='#333333'
+              style={styles.icon} />
+            <TextInput 
+              value={this.state.firstName}
+              placeholder={'First Name'}
+              onChangeText={(text) => this.setState({firstName: text})}
+              style={styles.textInput} />
+          </View>
+          <View style={styles.lineSeparator} />
 
-        <Text>First Name</Text>
-        <TextInput 
-          value={this.state.firstName}
-          onChangeText={(text) => this.setState({firstName: text})}
-          style={styles.textInput}/>
+          <View style={styles.iconContainer}>
+            <Icon
+              name='material|account-o'
+              size={30}
+              color='#333333'
+              style={styles.icon} />
+            <TextInput 
+              value={this.state.lastName}
+              placeholder={'Last Name'}
+              onChangeText={(text) => this.setState({lastName: text})}
+              style={styles.textInput} />
+          </View>
+          <View style={styles.lineSeparator} />
 
-        <Text>Last Name</Text>
-        <TextInput 
-          value={this.state.lastName}
-          onChangeText={(text) => this.setState({lastName: text})}
-          style={styles.textInput}/>  
+          <View style={styles.iconContainer}>
+            <Icon
+              name='material|account-o'
+              size={30}
+              color='#333333'
+              style={styles.icon} />
+            <TextInput 
+              value={this.state.email}
+              placeholder={'Email Address'}
+              onChangeText={(text) => this.setState({email: text})}
+              style={styles.textInput} />
+          </View>
+          <View style={styles.lineSeparator} />
 
-        <Text>Email Address</Text>
-        <TextInput 
-          value={this.state.email}
-          onChangeText={(text) => this.setState({email: text})}
-          style={styles.textInput}/>
+          <View style={styles.iconContainer}>
+            <Icon
+              name='material|lock-outline'
+              size={30}
+              color='#333333'
+              style={styles.icon} />
+            <TextInput 
+              value={this.state.password}
+              placeholder={'Password'}
+              secureTextEntry={true}
+              onChangeText={(text) => this.setState({password: text})}
+              style={styles.textInput} />
+          </View>
+          <View style={styles.lineSeparator} />
 
-        <Text>Password</Text>
-        <TextInput 
-          value={this.state.password}
-          secureTextEntry={true}
-          onChangeText={(text) => this.setState({password: text})}
-          style={styles.textInput}/>
+          <Button
+            text={'Create Account'}
+            onPress={this.createAccount} />  
 
-        <Button
-          text={'Create Account'}
-          onPress={this.createAccount}/>  
-
-        <Link
-          text={'Sign In'}
-          onPress={this.signIn}/>
+          <Link
+            style={styles.link}
+            text={'Already have an account? Sign In'}
+            onPress={this.signIn} />  
+        </View>
 
       </View>
     );
@@ -120,12 +156,38 @@ var styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  textInput: {
-    borderColor: 'black',
-    borderWidth: 1,
-    height: 40,
-    width: 200, // width require alignSelf
-    padding: 5,
+  // Footer
+  footer: {
+    alignItems: 'center',
+  },
+
+  // Icon
+  iconContainer: {
+    flexDirection: 'row',
     alignSelf: 'center',
-  }
+    // backgroundColor: 'green',
+    width: width * 8/10,
+    paddingTop: 5,
+    paddingBottom: 5,
+  },
+  icon: {
+    width: 30,
+    height: 30,
+    // backgroundColor: 'red',
+    alignSelf: 'center',
+  },
+
+  lineSeparator: {
+    height: 1,
+    backgroundColor: 'black',
+    width: width,
+  },
+
+  textInput: {
+    paddingLeft: 10,
+    height: 50,
+    flex: 1,
+    // backgroundColor: 'red',
+  },
+
 });

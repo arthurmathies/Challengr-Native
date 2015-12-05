@@ -1,4 +1,6 @@
 var React = require('react-native');
+var Dimensions = require('Dimensions');
+var {width, height} = Dimensions.get('window');
 
 var {
   Text,
@@ -23,14 +25,12 @@ var styles = StyleSheet.create({
   button: {
     justifyContent: 'center',
     alignItems: 'center',
-    borderWidth: 1,
-    borderRadius: 5,
-    borderColor: 'black',
     marginTop: 10,
-    width: 200,
-    height: 40,
+    width: width,
+    height: 50,
+    backgroundColor: 'black',
   },
   buttonText: {
-
+    color: 'white',
   }
 });

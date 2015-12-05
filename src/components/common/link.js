@@ -24,8 +24,6 @@ var styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 10,
-    width: 200,
-    height: 40,
   },
   linkText: {
     color: 'blue',

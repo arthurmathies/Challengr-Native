@@ -1,21 +1,34 @@
-# Node
-node_modules
+# OSX
+#
+.DS_Store
 
-# mergetool backup files
-*.orig
+# Xcode
+#
+build/
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata
+*.xccheckout
+*.moved-aside
+DerivedData
+*.hmap
+*.ipa
+*.xcuserstate
+project.xcworkspace
 
-# Bower Components
-client/lib
+# Android/IJ
+#
+.idea
+.gradle
+local.properties
 
-# private variables
-.env
-
-# Concatenated Scripts
-client/scripts.js
-
-# database sqlite files
-database/data/db.sqlite
-
-# Compiled Styles
-client/styles/main.css
-client/main.css
+# node.js
+#
+node_modules/
+npm-debug.log

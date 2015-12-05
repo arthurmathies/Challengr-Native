@@ -1,4 +1,7 @@
 var React = require('react-native');
+var Dimensions = require('Dimensions');
+var {width, height} = Dimensions.get('window');
+var { Icon } = require('react-native-icons');
 
 var {
   StyleSheet,
@@ -6,6 +9,7 @@ var {
   View,
   TextInput,
   AsyncStorage,
+  Image,
 } = React;
 
 var Button = require('../common/button');
@@ -25,31 +29,56 @@ module.exports = React.createClass({
   render: function(){
     return (
       <View style={styles.container}>
-      
-        <Text>Sign In</Text>
 
-        <Text>{this.state.errorMessage}</Text>
+        <View style={styles.header}>
+          <Image 
+            style={styles.backgroundImage}
+            source={{uri: 'https://s3-us-west-2.amazonaws.com/challengrimages/placeholder/Motivational-Gym-Quote-with-mobile-wallpaper.jpg'}}>
 
-        <Text>Email Address</Text>
-        <TextInput 
-          value={this.state.email}
-          onChangeText={(text) => this.setState({email: text})}
-          style={styles.textInput}/>
+          </Image>
+        </View>
 
-        <Text>Password</Text>
-        <TextInput 
-          value={this.state.password}
-          secureTextEntry={true}
-          onChangeText={(text) => this.setState({password: text})}
-          style={styles.textInput}/>
+        <View style={styles.footer}>
+          <Text>{this.state.errorMessage}</Text>
 
-        <Button
-          text={'Sign In'}
-          onPress={this.signIn}/>
+          <View style={styles.iconContainer}>
+            <Icon
+              name='material|account-o'
+              size={30}
+              color='#333333'
+              style={styles.icon} />
+            <TextInput 
+              value={this.state.email}
+              placeholder={'Email Address'}
+              onChangeText={(text) => this.setState({email: text})}
+              style={styles.textInput} />
+          </View>
+          <View style={styles.lineSeparator} />
 
-        <Link
-          text={'Create Account'}
-          onPress={this.createAccount}/>  
+          <View style={styles.iconContainer}>
+            <Icon
+              name='material|lock-outline'
+              size={30}
+              color='#333333'
+              style={styles.icon} />
+            <TextInput 
+              value={this.state.password}
+              placeholder={'Password'}
+              secureTextEntry={true}
+              onChangeText={(text) => this.setState({password: text})}
+              style={styles.textInput} />
+          </View>
+          <View style={styles.lineSeparator} />
+
+          <Button
+            text={'Sign In'}
+            onPress={this.signIn}/>
+
+          <Link
+            style={styles.link}
+            text={'Don\'t have an account? Sign Up'}
+            onPress={this.createAccount}/>  
+        </View>
 
       </View>
     )
@@ -97,7 +126,6 @@ module.exports = React.createClass({
         errorMessage: 'Please fill in an email and password'
       });
     }
-
   }
 
 });
@@ -108,12 +136,52 @@ var styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  textInput: {
-    borderColor: 'black',
-    borderWidth: 1,
-    height: 40,
-    width: 200, // width require alignSelf
-    padding: 5,
+
+  // Header
+  header: {
+    flex: 1,
+  },
+
+  // Footer
+  footer: {
+    flex: 1,
+    alignItems: 'center',
+  },
+
+  // Icon
+  iconContainer: {
+    flexDirection: 'row',
     alignSelf: 'center',
-  }
+    // backgroundColor: 'green',
+    width: width * 8/10,
+    paddingTop: 5,
+    paddingBottom: 5,
+  },
+  icon: {
+    width: 30,
+    height: 30,
+    // backgroundColor: 'red',
+    alignSelf: 'center',
+  },
+
+  lineSeparator: {
+    height: 1,
+    backgroundColor: 'black',
+    width: width,
+  },
+
+  textInput: {
+    paddingLeft: 10,
+    height: 50,
+    flex: 1,
+    // backgroundColor: 'red',
+  },
+
+  backgroundImage: {
+    flex: 1,
+    width: width,
+    resizeMode: Image.resizeMode.cover,
+  },
+
+
 });

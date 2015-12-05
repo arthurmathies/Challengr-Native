@@ -44,7 +44,7 @@ var CreateChallenge = React.createClass({
           <View style={styles.leftRow}>
             <Image 
               style={styles.rowPhoto}
-              source={require('../../../image/placeholder.png')} />
+              source={{uri: this.props.friend.photoURL}} />
           </View>
           <View style={styles.rightRow}>
             <Text>Challenging</Text>
