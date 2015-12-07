@@ -71,7 +71,7 @@ var ListChallenge = React.createClass({
               </View>
 
               <TouchableHighlight
-                onPress={() => this.increaseLike(this.props.rowData)}
+                onPress={() => this.increaseLike(this.props.challenge)}
                 underlayColor='transparent'>
                 <View style={styles.iconText}>
                   {this.renderHeartIcon()}

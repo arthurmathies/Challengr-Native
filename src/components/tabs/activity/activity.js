@@ -80,7 +80,10 @@ var Activity = React.createClass({
     this.props.navigator.push({
       title: _.capitalize(challenge.title),
       component: DetailChallenge,
-      passProps: {challenge: challenge}
+      passProps: {
+        challenge: challenge,
+        token: this.state.token,
+      },
     });
   },
 

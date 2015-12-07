@@ -16,10 +16,12 @@ var {
 
 var Button = require('./button');
 var Moment = require('moment');
+var API = require('../../api/challenges/challenges');
 
 var DetailChallenge = React.createClass({
 
   getInitialState: function(){
+    // are these all needed as state? or can they stay on props as single source of truth
     return {
       title: this.props.challenge.title,
       type: this.props.challenge.type,
@@ -78,6 +80,7 @@ var DetailChallenge = React.createClass({
         </View>
 
         <TouchableHighlight
+          onPress={() => this.increaseLike(this.props.challenge)}
           style={styles.iconText}
           underlayColor='transparent'>
           <View style={styles.iconText}>
@@ -129,17 +132,33 @@ var DetailChallenge = React.createClass({
   },
 
   challengeCompleted: function(){
-    // show alert saying do you really want to choose this charity?
     AlertIOS.alert(
-      'Have they completed the challenge?',
+      'Have you really completed the challenge?',
       null,
       [
-        {text: 'Cancel', onPress: () => console.log('Button Pressed!')},
+        {text: 'Cancel', onPress: () => console.log('Challenge Completion cancelled')},
         {text: 'Yes', onPress: () => {
           console.log('complete the challenge...');
         }},
       ]
     );
+  },
+
+  increaseLike: function(challenge){
+    var updateObj = {
+      id: challenge.id,
+      likes: this.state.likes + 1, 
+    };
+
+    API.updateChallenge(this.props.token, updateObj)
+    .then(function(resp) {
+      if(resp.success === true) {
+        this.setState({
+          likes: this.state.likes + 1,
+        });
+      }
+    }.bind(this))
+    .done();
   },
 
 });
