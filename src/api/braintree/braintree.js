@@ -1,7 +1,7 @@
 var API = require('../api');
 
 // Routes
-var transactionsURL = `${API.rootUrl}braintree/transactions`;
+var transactionsURL = `${API.rootUrl}braintree/transactions/`;
 
 var BraintreeAPI = {
 

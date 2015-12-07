@@ -34,11 +34,12 @@ var Activity = React.createClass({
             console.log('all challenges : ', challenges);
             // Loader
             self.state.isLoading = false;
-            // State
+
+            self.state.token = token;
             self.setState({
               dataSource: self.getDataSource(challenges),
-            })
-          })
+            });
+          });
       })
       .done();
   },

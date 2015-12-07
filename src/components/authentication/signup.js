@@ -122,7 +122,7 @@ module.exports = React.createClass({
             AsyncStorage.setItem('photoURL', data.user.photoURL);
             AsyncStorage.setItem('token', data.token);
             // Navigation
-            self.props.navigator.immediatelyResetRouteStack([{ name: 'tabs' }])
+            self.props.navigator.immediatelyResetRouteStack([{ name: 'tabs' }]);
           } else {
             // Clear State & Show Error
             self.setState({
@@ -134,7 +134,7 @@ module.exports = React.createClass({
             });
           }
 
-        })
+        });
 
     } else {
       self.setState({

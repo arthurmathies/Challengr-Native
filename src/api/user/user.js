@@ -1,7 +1,7 @@
 var API = require('../api');
 
 // Routes
-var userFriendsURL = `${API.rootUrl}user`;
+var userFriendsURL = `${API.rootUrl}user/`;
 
 var UserAPI = {
 

@@ -28,6 +28,6 @@ module.exports = {
         body: body
       })
       .then((response) => response.json())
-  }
+  },
 
 };

@@ -1,7 +1,7 @@
 var API = require('../api');
 
 // Routes
-var userChallengesURL = `${API.rootUrl}challenge/my`;
+var userChallengesURL = `${API.rootUrl}challenge/my/`;
 var challengesURL = `${API.rootUrl}challenge/`;
 
 var UserAPI = {
@@ -21,8 +21,6 @@ var UserAPI = {
   },
 
   updateChallenge: function(token, obj){
-
-
     console.log('obj : ', obj);
     // This is not being stringified properly, it is returning an error
     var challengeObj = JSON.stringify(obj);

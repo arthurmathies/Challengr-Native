@@ -9,7 +9,7 @@ var {
   Image,
   Text,
   ScrollView,
-  View
+  View,
 } = React;
 
 
@@ -26,7 +26,7 @@ var Carousel = React.createClass({
     style: View.propTypes.style,
     pageStyle: View.propTypes.style,
     contentContainerStyle: View.propTypes.style,
-    autoplay: React.PropTypes.bool
+    autoplay: React.PropTypes.bool,
   },
   mixins: [TimerMixin],
   getDefaultProps: function() {
