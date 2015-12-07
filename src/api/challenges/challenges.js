@@ -1,38 +1,43 @@
 var API = require('../api');
 
 // Routes
-var userChallengesURL = `${API.rootUrl}challenge/my`;
+var userChallengesURL = `${API.rootUrl}challenge/my/`;
 var challengesURL = `${API.rootUrl}challenge/`;
 
-var UserAPI = {
+var ChallengeAPI = {
 
-  getChallenges: function(token){
-    return API.fetchJSON(userChallengesURL, token)      
-      .then(function(json){
+  getUserChallenges: function(token) {
+    return API.fetchJSON(userChallengesURL, token)
+      .then(function(json) {
         return json;
+      })
+      .catch(function(err) {
+        console.log('error retrieving challenges for specific user : ', err);
       });
   },
 
-  getAllChallenges: function(token){
-    return API.fetchJSON(challengesURL, token)      
-      .then(function(json){
+  getAllChallenges: function(token) {
+    return API.fetchJSON(challengesURL, token)
+      .then(function(json) {
         return json;
+      })
+      .catch(function(err) {
+        console.log('error retrieving all challenges : ', err);
       });
   },
 
-  updateChallenge: function(token, obj){
-
-
-    console.log('obj : ', obj);
-    // This is not being stringified properly, it is returning an error
+  updateChallenge: function(token, obj) {
     var challengeObj = JSON.stringify(obj);
 
     return API.postJSON(challengesURL, 'PUT', challengeObj, token)
-      .catch(function (err) {
+      .then(function(json) {
+        return json;
+      })
+      .catch(function(err) {
         console.log('error increasing like : ', err);
       });
-  }
+  },
 
-}
+};
 
-module.exports = UserAPI;
+module.exports = ChallengeAPI;

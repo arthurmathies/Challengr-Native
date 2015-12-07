@@ -23,7 +23,7 @@ module.exports = React.createClass({
       email: '',
       password: '',
       errorMessage: '',
-    }
+    };
   },
 
   render: function(){
@@ -34,7 +34,6 @@ module.exports = React.createClass({
           <Image 
             style={styles.backgroundImage}
             source={{uri: 'https://s3-us-west-2.amazonaws.com/challengrimages/placeholder/Motivational-Gym-Quote-with-mobile-wallpaper.jpg'}}>
-
           </Image>
         </View>
 
@@ -73,12 +72,12 @@ module.exports = React.createClass({
         </View>
 
       </View>
-    )
+    );
   },
 
   createAccount: function(){
     // navigate to signup page
-    this.props.navigator.push({name: 'createAccount'})
+    this.props.navigator.push({name: 'createAccount'});
   },
 
   signIn: function(){
@@ -101,7 +100,7 @@ module.exports = React.createClass({
             AsyncStorage.setItem('photoURL', data.user.photoURL);
             AsyncStorage.setItem('token', data.token);
             // Navigation
-            self.props.navigator.immediatelyResetRouteStack([{ name: 'tabs' }])
+            self.props.navigator.immediatelyResetRouteStack([{ name: 'tabs' }]);
           } else{
             // Clear State & Show Error
             self.setState({
@@ -111,18 +110,19 @@ module.exports = React.createClass({
             });
           }
 
-        })
+        });
 
     } else {
       self.setState({
         errorMessage: 'Please fill in an email and password'
       });
     }
-  }
+  },
 
 });
 
 var styles = StyleSheet.create({
+  
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -174,6 +174,5 @@ var styles = StyleSheet.create({
     width: width,
     resizeMode: Image.resizeMode.cover,
   },
-
 
 });

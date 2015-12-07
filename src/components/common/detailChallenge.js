@@ -16,20 +16,23 @@ var {
 
 var Button = require('./button');
 var Moment = require('moment');
+var API = require('../../api/challenges/challenges');
 
 var DetailChallenge = React.createClass({
 
   getInitialState: function(){
+    // are these all needed as state? or can they stay on props as single source of truth
     return {
       title: this.props.challenge.title,
       type: this.props.challenge.type,
-      Challenger: this.props.challenge.Challenger,
-      Challenged: this.props.challenge.Challenged,
+      challenger: this.props.challenge.Challenger,
+      challenged: this.props.challenge.Challenged,
       description: this.props.challenge.description,
       charityAmount: this.props.challenge.charityAmount,
       expiresDate: this.props.challenge.expiresDate,
+      issuedDate: this.props.challenge.issuedDate,
       likes: this.props.challenge.likes,
-    }
+    };
   },
 
   render: function() {
@@ -53,11 +56,11 @@ var DetailChallenge = React.createClass({
         <View style={styles.images}>
           <Image 
             style={styles.challengedPhoto}
-            source={{uri: this.state.Challenged.photoURL}} />
+            source={{uri: this.state.challenged.photoURL}} />
 
           <Image 
             style={styles.challengerPhoto}
-            source={{uri: this.state.Challenger.photoURL}} />
+            source={{uri: this.state.challenger.photoURL}} />
         </View>
 
         <View style={styles.iconText}>
@@ -73,10 +76,11 @@ var DetailChallenge = React.createClass({
             name='material|money'
             size={15}
             style={styles.icon} />
-          <Text style={styles.socialText}>{this.state.charityAmount * 100}</Text>
+          <Text style={styles.socialText}>{this.state.charityAmount * 100 + '\u00A2'}</Text>
         </View>
 
         <TouchableHighlight
+          onPress={() => this.increaseLike(this.props.challenge)}
           style={styles.iconText}
           underlayColor='transparent'>
           <View style={styles.iconText}>
@@ -121,24 +125,40 @@ var DetailChallenge = React.createClass({
       <View style={styles.footer}>
         <Button
           icon={false}
-          text={'Challenge Completed ?'}
-          onPress={this.challengeComplete}/>
+          text={'Challenge Completed'}
+          onPress={this.challengeCompleted}/>
       </View>
     )
   },
 
-  challengeComplete: function(){
-    // show alert saying do you really want to choose this charity?
+  challengeCompleted: function(){
     AlertIOS.alert(
-      'Have they completed the challenge?',
+      'Have you really completed the challenge?',
       null,
       [
-        {text: 'Cancel', onPress: () => console.log('Button Pressed!')},
+        {text: 'Cancel', onPress: () => console.log('Challenge Completion cancelled')},
         {text: 'Yes', onPress: () => {
           console.log('complete the challenge...');
         }},
       ]
-    )
+    );
+  },
+
+  increaseLike: function(challenge){
+    var updateObj = {
+      id: challenge.id,
+      likes: this.state.likes + 1, 
+    };
+
+    API.updateChallenge(this.props.token, updateObj)
+    .then(function(resp) {
+      if(resp.success === true) {
+        this.setState({
+          likes: this.state.likes + 1,
+        });
+      }
+    }.bind(this))
+    .done();
   },
 
 });

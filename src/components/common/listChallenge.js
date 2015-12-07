@@ -18,6 +18,12 @@ var API = require('../../api/challenges/challenges');
 
 var ListChallenge = React.createClass({
 
+  getInitialState: function() {
+    return {
+      likes: this.props.rowData.likes,
+    };
+  },
+
   render: function() {
 
     var issue = Moment(this.props.rowData.issuedDate);
@@ -61,7 +67,7 @@ var ListChallenge = React.createClass({
                   name='material|money'
                   size={15}
                   style={styles.icon} />
-                <Text style={styles.rowSocialText}>{this.props.rowData.charityAmount * 100}</Text>
+                <Text style={styles.rowSocialText}>{this.props.rowData.charityAmount * 100 + '\u00A2'}</Text>
               </View>
 
               <TouchableHighlight
@@ -69,7 +75,7 @@ var ListChallenge = React.createClass({
                 underlayColor='transparent'>
                 <View style={styles.iconText}>
                   {this.renderHeartIcon()}
-                  <Text style={styles.rowSocialText}>{this.props.rowData.likes} likes</Text>
+                  <Text style={styles.rowSocialText}>{this.state.likes} likes</Text>
                 </View>
               </TouchableHighlight>
 
@@ -96,16 +102,20 @@ var ListChallenge = React.createClass({
   },
 
   increaseLike: function(challenge){
-
     var updateObj = {
       id: challenge.id,
-      likes: ++challenge.likes,
-      completed: challenge.completed,
-      notCompleted: challenge.notCompleted,
+      likes: this.state.likes + 1, 
     };
 
     API.updateChallenge(this.props.token, updateObj)
-
+    .then(function(resp) {
+      if(resp.success === true) {
+        this.setState({
+          likes: this.state.likes + 1,
+        });
+      }
+    }.bind(this))
+    .done();
   },
 
 });

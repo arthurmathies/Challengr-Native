@@ -1,8 +1,8 @@
 var API = require('../api');
 
 // Routes
-var signinURL = `${API.rootUrl}auth/signin`;
-var signupURL = `${API.rootUrl}auth/signup`;
+var signinURL = `${API.rootUrl}auth/signin/`;
+var signupURL = `${API.rootUrl}auth/signup/`;
 
 var AuthAPI = {
 

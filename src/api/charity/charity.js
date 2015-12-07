@@ -1,7 +1,7 @@
 var API = require('../api');
 
 // Routes
-var charityURL = `${API.rootUrl}charity`;
+var charityURL = `${API.rootUrl}charity/`;
 
 var CharityAPI = {
 

@@ -34,11 +34,13 @@ var Activity = React.createClass({
             console.log('all challenges : ', challenges);
             // Loader
             self.state.isLoading = false;
-            // State
+
+            self.state.token = token;
             self.setState({
               dataSource: self.getDataSource(challenges),
-            })
+            });
           })
+          .done();
       })
       .done();
   },
@@ -50,7 +52,7 @@ var Activity = React.createClass({
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
-    }
+    };
   },
 
   render: function() {
@@ -78,7 +80,10 @@ var Activity = React.createClass({
     this.props.navigator.push({
       title: _.capitalize(challenge.title),
       component: DetailChallenge,
-      passProps: {challenge: challenge}
+      passProps: {
+        challenge: challenge,
+        token: this.state.token,
+      },
     });
   },
 
