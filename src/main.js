@@ -28,7 +28,7 @@ module.exports = React.createClass({
     return (
       <Navigator
         style={styles.container}
-        initialRoute={{name: 'signin'}}
+        initialRoute={{name: 'tabs'}}
         renderScene={this.renderScene}
         configureScene={() => { return Navigator.SceneConfigs.FloatFromRight; }}
         />

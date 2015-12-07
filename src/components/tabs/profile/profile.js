@@ -39,7 +39,7 @@ var Profile = React.createClass({
         });
         var token = valArr[5][1];
         // API
-        API.getChallenges(token)
+        API.getUserChallenges(token)
           .then(function(challenges){
             // Loader
             self.state.isLoading = false;

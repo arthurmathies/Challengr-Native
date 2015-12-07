@@ -23,13 +23,14 @@ var DetailChallenge = React.createClass({
     return {
       title: this.props.challenge.title,
       type: this.props.challenge.type,
-      Challenger: this.props.challenge.Challenger,
-      Challenged: this.props.challenge.Challenged,
+      challenger: this.props.challenge.Challenger,
+      challenged: this.props.challenge.Challenged,
       description: this.props.challenge.description,
       charityAmount: this.props.challenge.charityAmount,
       expiresDate: this.props.challenge.expiresDate,
+      issuedDate: this.props.challenge.issuedDate,
       likes: this.props.challenge.likes,
-    }
+    };
   },
 
   render: function() {
@@ -53,11 +54,11 @@ var DetailChallenge = React.createClass({
         <View style={styles.images}>
           <Image 
             style={styles.challengedPhoto}
-            source={{uri: this.state.Challenged.photoURL}} />
+            source={{uri: this.state.challenged.photoURL}} />
 
           <Image 
             style={styles.challengerPhoto}
-            source={{uri: this.state.Challenger.photoURL}} />
+            source={{uri: this.state.challenger.photoURL}} />
         </View>
 
         <View style={styles.iconText}>
@@ -73,7 +74,7 @@ var DetailChallenge = React.createClass({
             name='material|money'
             size={15}
             style={styles.icon} />
-          <Text style={styles.socialText}>{this.state.charityAmount * 100}</Text>
+          <Text style={styles.socialText}>{this.state.charityAmount * 100 + '\u00A2'}</Text>
         </View>
 
         <TouchableHighlight
@@ -121,13 +122,13 @@ var DetailChallenge = React.createClass({
       <View style={styles.footer}>
         <Button
           icon={false}
-          text={'Challenge Completed ?'}
-          onPress={this.challengeComplete}/>
+          text={'Challenge Completed'}
+          onPress={this.challengeCompleted}/>
       </View>
     )
   },
 
-  challengeComplete: function(){
+  challengeCompleted: function(){
     // show alert saying do you really want to choose this charity?
     AlertIOS.alert(
       'Have they completed the challenge?',
@@ -138,7 +139,7 @@ var DetailChallenge = React.createClass({
           console.log('complete the challenge...');
         }},
       ]
-    )
+    );
   },
 
 });

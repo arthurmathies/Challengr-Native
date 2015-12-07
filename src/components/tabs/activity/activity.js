@@ -39,7 +39,8 @@ var Activity = React.createClass({
             self.setState({
               dataSource: self.getDataSource(challenges),
             });
-          });
+          })
+          .done();
       })
       .done();
   },
@@ -51,7 +52,7 @@ var Activity = React.createClass({
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
-    }
+    };
   },
 
   render: function() {
