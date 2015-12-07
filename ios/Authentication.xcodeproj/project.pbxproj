@@ -26,6 +26,11 @@
 		887230121C114F7F00879988 /* ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 887230111C114F7F00879988 /* ionicons.ttf */; };
 		887230161C11514000879988 /* FontAwesome.otf in Resources */ = {isa = PBXBuildFile; fileRef = 887230151C11514000879988 /* FontAwesome.otf */; };
 		887230181C11516E00879988 /* Material-Design-Iconic-Font.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 887230171C11516E00879988 /* Material-Design-Iconic-Font.ttf */; };
+		88A7A1511C13730B0098B9F3 /* libRNTableView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A7A1501C1372940098B9F3 /* libRNTableView.a */; };
+		88A7A1551C1390410098B9F3 /* UIImagePickerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A7A1541C1390410098B9F3 /* UIImagePickerManager.m */; };
+		88A7A1711C13A9F40098B9F3 /* MyCustomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A7A1701C13A9F40098B9F3 /* MyCustomView.m */; };
+		88A7A1801C13AA0C0098B9F3 /* MyCustomViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 88A7A17F1C13AA0C0098B9F3 /* MyCustomViewManager.m */; };
+		88A7A1871C13C3050098B9F3 /* libRNFS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A7A1861C13C2E60098B9F3 /* libRNFS.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -113,6 +118,20 @@
 			remoteGlobalIDString = 2F5A3EB81ACDBF8000439386;
 			remoteInfo = ReactNativeIcons;
 		};
+		88A7A14F1C1372940098B9F3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88A7A1401C1372940098B9F3 /* RNTableView.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 873769951B7CD6E900F7C3C2;
+			remoteInfo = RNTableView;
+		};
+		88A7A1851C13C2E60098B9F3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88A7A1811C13C2E60098B9F3 /* RNFS.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F12AFB9B1ADAF8F800E0535D;
+			remoteInfo = RNFS;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -141,6 +160,14 @@
 		887230111C114F7F00879988 /* ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ionicons.ttf; sourceTree = "<group>"; };
 		887230151C11514000879988 /* FontAwesome.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = FontAwesome.otf; path = FontAwesomeKit/FontAwesome.otf; sourceTree = "<group>"; };
 		887230171C11516E00879988 /* Material-Design-Iconic-Font.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Material-Design-Iconic-Font.ttf"; path = "FontAwesomeKit/Material-Design-Iconic-Font.ttf"; sourceTree = "<group>"; };
+		88A7A1401C1372940098B9F3 /* RNTableView.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNTableView.xcodeproj; path = "../node_modules/react-native-tableview/RNTableView.xcodeproj"; sourceTree = "<group>"; };
+		88A7A1531C1390410098B9F3 /* UIImagePickerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIImagePickerManager.h; sourceTree = "<group>"; };
+		88A7A1541C1390410098B9F3 /* UIImagePickerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIImagePickerManager.m; sourceTree = "<group>"; };
+		88A7A16F1C13A9F40098B9F3 /* MyCustomView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyCustomView.h; path = Authentication/MyCustomView.h; sourceTree = "<group>"; };
+		88A7A1701C13A9F40098B9F3 /* MyCustomView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyCustomView.m; path = Authentication/MyCustomView.m; sourceTree = "<group>"; };
+		88A7A17E1C13AA0C0098B9F3 /* MyCustomViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyCustomViewManager.h; path = Authentication/MyCustomViewManager.h; sourceTree = "<group>"; };
+		88A7A17F1C13AA0C0098B9F3 /* MyCustomViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyCustomViewManager.m; path = Authentication/MyCustomViewManager.m; sourceTree = "<group>"; };
+		88A7A1811C13C2E60098B9F3 /* RNFS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNFS.xcodeproj; path = "../node_modules/react-native-fs/RNFS.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,6 +182,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				88A7A1871C13C3050098B9F3 /* libRNFS.a in Frameworks */,
+				88A7A1511C13730B0098B9F3 /* libRNTableView.a in Frameworks */,
 				88024DE21C0E625300891791 /* libReactNativeIcons.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
@@ -255,6 +284,10 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				88A7A16F1C13A9F40098B9F3 /* MyCustomView.h */,
+				88A7A1701C13A9F40098B9F3 /* MyCustomView.m */,
+				88A7A17E1C13AA0C0098B9F3 /* MyCustomViewManager.h */,
+				88A7A17F1C13AA0C0098B9F3 /* MyCustomViewManager.m */,
 			);
 			name = Authentication;
 			sourceTree = "<group>";
@@ -278,6 +311,9 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				88A7A1811C13C2E60098B9F3 /* RNFS.xcodeproj */,
+				88A7A1521C1390410098B9F3 /* UIImagePickerManager */,
+				88A7A1401C1372940098B9F3 /* RNTableView.xcodeproj */,
 				88024DDC1C0E623C00891791 /* ReactNativeIcons.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
@@ -333,6 +369,32 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		88A7A1411C1372940098B9F3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				88A7A1501C1372940098B9F3 /* libRNTableView.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		88A7A1521C1390410098B9F3 /* UIImagePickerManager */ = {
+			isa = PBXGroup;
+			children = (
+				88A7A1531C1390410098B9F3 /* UIImagePickerManager.h */,
+				88A7A1541C1390410098B9F3 /* UIImagePickerManager.m */,
+			);
+			name = UIImagePickerManager;
+			path = "../node_modules/react-native-image-picker/UIImagePickerManager";
+			sourceTree = "<group>";
+		};
+		88A7A1821C13C2E60098B9F3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				88A7A1861C13C2E60098B9F3 /* libRNFS.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -384,6 +446,14 @@
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
+					};
+					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = VXYDWNZ92Z;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -442,6 +512,14 @@
 				{
 					ProductGroup = 88024DDD1C0E623C00891791 /* Products */;
 					ProjectRef = 88024DDC1C0E623C00891791 /* ReactNativeIcons.xcodeproj */;
+				},
+				{
+					ProductGroup = 88A7A1821C13C2E60098B9F3 /* Products */;
+					ProjectRef = 88A7A1811C13C2E60098B9F3 /* RNFS.xcodeproj */;
+				},
+				{
+					ProductGroup = 88A7A1411C1372940098B9F3 /* Products */;
+					ProjectRef = 88A7A1401C1372940098B9F3 /* RNTableView.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -530,6 +608,20 @@
 			remoteRef = 88024DE01C0E623C00891791 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		88A7A1501C1372940098B9F3 /* libRNTableView.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNTableView.a;
+			remoteRef = 88A7A14F1C1372940098B9F3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		88A7A1861C13C2E60098B9F3 /* libRNFS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNFS.a;
+			remoteRef = 88A7A1851C13C2E60098B9F3 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -585,7 +677,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				88A7A1711C13A9F40098B9F3 /* MyCustomView.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				88A7A1551C1390410098B9F3 /* UIImagePickerManager.m in Sources */,
+				88A7A1801C13AA0C0098B9F3 /* MyCustomViewManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -653,16 +748,21 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEAD_CODE_STRIPPING = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/react-native/React/**",
+					"$(SRCROOT)/../../React/**",
+					"$(SRCROOT)/../react-native/React/**",
 				);
 				INFOPLIST_FILE = Authentication/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = Authentication;
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -670,15 +770,20 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/react-native/React/**",
+					"$(SRCROOT)/../../React/**",
+					"$(SRCROOT)/../react-native/React/**",
 				);
 				INFOPLIST_FILE = Authentication/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = Authentication;
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

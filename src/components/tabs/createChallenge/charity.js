@@ -20,6 +20,7 @@ var {
 } = React;
 
 var API = require('../../../api/charity/charity');
+var Link = require('../../common/link');
 
 var Charity = React.createClass({
 
@@ -48,29 +49,47 @@ var Charity = React.createClass({
   },
 
   render: function() {
+    return (
+      <View style={styles.container}>
+        {this._renderCharities(this.state.charities)}
+      </View>
+    );
+  },
 
-    var CHARITIES = this.state.charities;
-
+  _renderCharities: function(CHARITIES){
     return (
       <Carousel style={{width: width, height: height}}>
         {
           _.map(CHARITIES, (charity) => (
             <TouchableHighlight
-              style={styles.charity}
               onPress={() => this.selectCharity(charity)}>
-              <View >
-                <Text>{charity.name}</Text>
+
+              <View style={styles.charity}>
+
+                <Text style={styles.textHeader}>{charity.name}</Text>
+
+                <Text style={styles.textParagraph}>{charity.description}</Text>
+
+                <Link
+                  underlayColor={'transparent'}
+                  text={_.trim(charity.link, 'https://www./')}
+                  onPress={this.goToLink(charity.link)}/>  
+
                 <Image 
                   style={styles.charityPhoto}
                   source={{uri: charity.imgUrl}} />
-                <Text>{charity.description}</Text>
-                <Text>{charity.link}</Text>
+
               </View>
+
             </TouchableHighlight>
           ) 
         )}
       </Carousel>
     );
+  },
+
+  goToLink: function(link){
+
   },
 
   selectCharity: function(charity){
@@ -106,21 +125,33 @@ var Charity = React.createClass({
 var styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop: 60,
   },
   charity: {
+    flex: 1,
     padding: 10,
+    height: height - 110,
+    backgroundColor: '#F3F3F3',
+    justifyContent: 'space-around',
     alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#BADA55', 
-    width: width, 
-    height: height
   },
 
   charityPhoto: {
-    width: 150, 
-    height: 150,
+    width: 100, 
+    height: 100,
+    borderRadius: 50,
   },
 
+  // TExt
+  textHeader: {
+    color: 'rgba(84, 105, 121, 1)',
+    fontSize: 22,
+  },
+  textParagraph: {
+    color: 'rgba(84, 105, 121, 0.8)',
+    fontSize: 16,
+    textAlign: 'center',
+  }
 
 
 });

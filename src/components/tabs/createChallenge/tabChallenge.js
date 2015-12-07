@@ -17,10 +17,13 @@ var CreateChallenge = React.createClass({
   render: function() {
     return (
       <NavigatorIOS
+        tintColor={'#FFFFFF'}
+        titleTextColor={'#FFFFFF'}
+        barTintColor={'#47A0DB'}
         style={styles.container}
         initialRoute={{
           component: ChooseFriend,
-          title: 'Choose Friend',
+          title: 'Friends',
           passProps: { myProp: 'foo' },
         }}
       />

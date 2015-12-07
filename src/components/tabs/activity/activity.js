@@ -16,8 +16,8 @@ var {
 } = React;
 
 var API = require('../../../api/challenges/challenges');
-var DetailChallenge = require('../detailChallenge');
-var ListChallenge = require('../listChallenge');
+var DetailChallenge = require('../../common/detailChallenge');
+var ListChallenge = require('../../common/listChallenge');
 
 var Activity = React.createClass({
 
@@ -117,6 +117,5 @@ var styles = StyleSheet.create({
   }
 
 });
-
 
 module.exports = Activity;

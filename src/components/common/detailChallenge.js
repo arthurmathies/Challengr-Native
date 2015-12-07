@@ -14,7 +14,7 @@ var {
   AlertIOS,
 } = React;
 
-var Button = require('../common/button');
+var Button = require('./button');
 var Moment = require('moment');
 
 var DetailChallenge = React.createClass({
@@ -110,8 +110,8 @@ var DetailChallenge = React.createClass({
         automaticallyAdjustContentInsets={false}
         scrollEventThrottle={200}
         style={styles.main}>
-        <Text>{this.state.type}</Text>
-        <Text>{this.state.description}</Text>
+        <Text style={styles.textHeader}>{this.state.type}</Text>
+        <Text style={styles.textParagraph}>{this.state.description}</Text>
       </ScrollView>
     )
   },
@@ -120,6 +120,7 @@ var DetailChallenge = React.createClass({
     return(
       <View style={styles.footer}>
         <Button
+          icon={false}
           text={'Challenge Completed ?'}
           onPress={this.challengeComplete}/>
       </View>
@@ -154,6 +155,7 @@ var styles = StyleSheet.create({
     marginTop: 66,
     flexDirection: 'row',
     justifyContent: 'space-around',
+    backgroundColor: '#F3F3F3',
   },
 
   // Challenged and Challenger Images
@@ -205,6 +207,20 @@ var styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 49,
   },
+
+  // TExt
+  textHeader: {
+    color: 'rgba(84, 105, 121, 1)',
+    fontSize: 22,
+    textAlign: 'center',
+    paddingBottom: 10,
+  },
+  textParagraph: {
+    color: 'rgba(84, 105, 121, 0.8)',
+    fontSize: 16,
+    textAlign: 'center',
+  }
+
 });
 
 

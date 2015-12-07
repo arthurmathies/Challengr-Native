@@ -2,6 +2,10 @@
 'use strict';
 
 var React = require('react-native');
+var RNFS = require('react-native-fs');
+
+var path = RNFS.DocumentDirectoryPath;
+var path2 = RNFS.MainBundlePath;
 
 var {
   StyleSheet,
@@ -51,6 +55,10 @@ var ChooseFriend = React.createClass({
   },
 
   render: function() {
+
+    console.log('PATH : ', path);
+    console.log('PATH 2: ', path2);
+
     return (
       <View style={styles.container}>
         <SearchBar
@@ -63,7 +71,7 @@ var ChooseFriend = React.createClass({
         <View style={styles.separator} />
         <ListView
           ref="listview"
-          automaticallyAdjustContentInsets={true}
+          automaticallyAdjustContentInsets={false}
           dataSource={this.state.dataSource}
           renderRow={this._renderRow}
           renderSeparator={this._renderSeparator}
@@ -75,7 +83,7 @@ var ChooseFriend = React.createClass({
 
   selectFriend: function(friend){
     this.props.navigator.push({
-      title: 'Create Challenge',
+      title: 'Challenge',
       component: CreateChallenge,
       passProps: {friend: friend}
     });
@@ -95,7 +103,7 @@ var ChooseFriend = React.createClass({
               source={{uri: friend.photoURL}} />
           </View>
           <View style={styles.rightRow}>
-            <Text>{friend.firstName} {friend.lastName}</Text>
+            <Text style={styles.text}>{friend.firstName} {friend.lastName}</Text>
           </View>
         </View>
       </TouchableHighlight>
@@ -141,24 +149,21 @@ var styles = StyleSheet.create({
     marginVertical: 20,
   },
 
-  searchbar: {
-    height: 40,
-  },
   separator: {
     height: 1,
     backgroundColor: 'rgba(216, 216, 216, 1)',
   },
 
   rowSeparator: {
-    backgroundColor: 'rgba(216, 216, 216, 1)',
+    backgroundColor: 'rgba(216, 216, 216, 0.3)',
     height: 1,
     marginLeft: 80,
   },
 
   // Row
   row: {
-    marginBottom: 5,
-    marginTop: 5,
+    marginBottom: 10,
+    marginTop: 10,
     paddingLeft: 10,
     paddingRight: 10,
     flexDirection: 'row',
@@ -177,7 +182,13 @@ var styles = StyleSheet.create({
   rightRow: {
     flex: 4,
     alignSelf: 'center',
-  }
+  },
+
+  // Text
+  text: {
+    color: '#546979',
+    fontSize: 22,
+  },
 
 });
 

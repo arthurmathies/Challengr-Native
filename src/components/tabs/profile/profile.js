@@ -3,6 +3,7 @@
 var React = require('react-native');
 var _ = require('lodash');
 var { Icon } = require('react-native-icons');
+var UIImagePickerManager = require('NativeModules').UIImagePickerManager;
 
 var {
   StyleSheet,
@@ -16,8 +17,8 @@ var {
 } = React;
 
 var API = require('../../../api/challenges/challenges');
-var DetailChallenge = require('../detailChallenge');
-var ListChallenge = require('../listChallenge');
+var DetailChallenge = require('../../common/detailChallenge');
+var ListChallenge = require('../../common/listChallenge');
 var Settings = require('./settings');
 
 var Profile = React.createClass({
@@ -131,6 +132,45 @@ var Profile = React.createClass({
 
   _changePhoto: function(){
     // access the camera to change profile image
+    var options = {
+      title: 'Select Profile Image',
+      cancelButtonTitle: 'Cancel',
+      takePhotoButtonTitle: 'Take Photo...',
+      chooseFromLibraryButtonTitle: 'Choose from Library...',
+      customButtons: {
+        'Choose Photo from Facebook': 'fb', // [Button Text] : [String returned upon selection]
+      },
+      quality: 1,
+      allowsEditing: false, // Built in iOS functionality to resize/reposition the image
+      noData: false, // Disables the base64 `data` field from being generated (greatly improves performance on large photos)
+      storageOptions: { // if this key is provided, the image will get saved in the documents directory (rather than a temporary directory)
+        skipBackup: true, // image will NOT be backed up to icloud
+        path: 'images' // will save image at /Documents/images rather than the root
+      }
+    };
+
+    UIImagePickerManager.showImagePicker(options, (didCancel, response) => {
+      console.log('Response = ', response);
+      if (didCancel) {
+        
+      }
+      else {
+        if (response.customButton) {
+          console.log('User tapped custom button: ', response.customButton);
+        }
+        else {
+          // You can display the image using either:
+          const source = 'data:image/jpeg;base64,' + response.data;
+          // const source = {uri: response.uri.replace('file://', ''), isStatic: true};
+
+          // Upload and change the user's profile image
+
+          this.setState({
+            photoURL: source
+          });
+        }
+      }
+    });
   },
 
   userChallenges: function(){
@@ -192,7 +232,6 @@ var styles = StyleSheet.create({
   // Header
   header: {
     flex: 1,
-    marginTop: 60,
     padding: 10,
     backgroundColor: 'EEAF4B',
     alignItems: 'center',

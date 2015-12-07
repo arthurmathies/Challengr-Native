@@ -3,6 +3,11 @@
 
 var React = require('react-native');
 var { Icon } = require('react-native-icons');
+var _ = require('lodash');
+
+var TableView = require('react-native-tableview');
+var Section = TableView.Section;
+var Item = TableView.Item;
 
 var {
   StyleSheet,
@@ -22,6 +27,7 @@ var Moment = require('moment');
 var Settings = React.createClass({
 
   componentDidMount: function(){
+
     var self = this;
     // Loader
     self.state.isLoading = true;
@@ -52,22 +58,57 @@ var Settings = React.createClass({
   },
 
   render: function() {
+
+    var name = this.props.user.firstName + ' ' + this.props.user.lastName;
+    var email = this.props.user.email;
+
     return (
       <View style={styles.container}>
 
         <View style={styles.header}>
-          <Text>{this.props.user.firstName} {this.props.user.lastName}</Text>
-          <Text>{this.props.user.email}</Text>
+
+          <View style={styles.tableView}>
+            <View style={styles.tableViewHeader}>
+              <Text style={styles.sectionText}>{('Profile Information').toUpperCase()}</Text>
+            </View>
+            <TouchableHighlight
+              onPress={() => this.changeName()}
+              underlayColor='transparent'>
+
+              <View style={styles.cell}>
+                <Text style={styles.textParagraph}>{name}</Text>
+                <Icon
+                  name='material|chevron-right'
+                  size={20}
+                  style={styles.icon} />
+              </View>
+            </TouchableHighlight>
+            <TouchableHighlight
+              onPress={() => this.selectTransaction()}
+              underlayColor='transparent'>
+
+              <View style={styles.cell}>
+                <Text>{email}</Text>
+                <Icon
+                  name='material|chevron-right'
+                  size={20}
+                  style={styles.icon} />
+              </View>
+            </TouchableHighlight>
+          </View>
+          
         </View>
 
         <View style={styles.main}>
           <ListView
-            ref="listview"
-            automaticallyAdjustContentInsets={true}
+            ref='listview'
+            automaticallyAdjustContentInsets={false}
             dataSource={this.state.dataSource}
+            renderHeader={this._renderHeader}
             renderRow={this._renderRow}
             renderSeparator={this._renderSeparator}
             renderFooter={this._renderFooter}
+            style={styles.tableView}
           />
         </View>
 
@@ -87,6 +128,12 @@ var Settings = React.createClass({
   },
 
   // List View
+  _renderHeader: function(){
+    return (
+      <Text style={styles.sectionText}>{('Billing Information').toUpperCase()}</Text>
+    );
+  },
+
   _renderRow: function(transaction){
 
     var createdAt = Moment(transaction.created)
@@ -159,20 +206,48 @@ var styles = StyleSheet.create({
 
   // Header
   header: {
-    padding: 10,
+    
   },
+
+  // TableView
+  tableView: {
+    backgroundColor: '#F0F0F2',
+    // flex: 1,
+    paddingTop: 30,
+    paddingBottom: 15,
+  },
+  cell: {
+    backgroundColor: 'white',
+    borderBottomColor: 'C8C7CC',
+    borderBottomWidth: 1, 
+    // flex: 1,
+    height: 40,
+    flexDirection: 'row',
+    paddingLeft: 15,
+    paddingRight: 10,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+
+  },
+
+  sectionText: {
+    paddingLeft: 15,
+    paddingBottom: 5,
+  },
+
 
   // Main Content
   main: {
-    flex: 1,
+    flex: 1, 
+    backgroundColor: 'blue',
   },
   // Row
   row: {
-    marginBottom: 5,
-    marginTop: 5,
-    paddingLeft: 10,
+    height: 60,
+    paddingLeft: 15,
     paddingRight: 10,
     flexDirection: 'row',
+    backgroundColor: 'white',
   },
 
   leftRow: {
@@ -191,13 +266,14 @@ var styles = StyleSheet.create({
   },
 
   rowSeparator: {
-    backgroundColor: 'rgba(216, 216, 216, 0.5)',
+    backgroundColor: 'rgba(216, 216, 216, 1)',
     height: 1,
     marginLeft: 80,
   },
 
   footer: {
     marginBottom: 50,
+    backgroundColor: '#F0F0F2',
   },
 
   iconText: {
@@ -208,7 +284,12 @@ var styles = StyleSheet.create({
   icon: {
     width: 15,
     height: 15,
-  }
+  },
+
+  // Text
+  textParagraph: {
+    fontSize: 16,
+  },
 
 });
 

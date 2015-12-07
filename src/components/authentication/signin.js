@@ -42,11 +42,7 @@ module.exports = React.createClass({
           <Text>{this.state.errorMessage}</Text>
 
           <View style={styles.iconContainer}>
-            <Icon
-              name='material|account-o'
-              size={30}
-              color='#333333'
-              style={styles.icon} />
+            <Icon name='material|account-o' size={30} color='#333333' style={styles.icon} />
             <TextInput 
               value={this.state.email}
               placeholder={'Email Address'}
@@ -56,11 +52,7 @@ module.exports = React.createClass({
           <View style={styles.lineSeparator} />
 
           <View style={styles.iconContainer}>
-            <Icon
-              name='material|lock-outline'
-              size={30}
-              color='#333333'
-              style={styles.icon} />
+            <Icon name='material|lock-outline' size={30} color='#333333' style={styles.icon} />
             <TextInput 
               value={this.state.password}
               placeholder={'Password'}
@@ -75,9 +67,9 @@ module.exports = React.createClass({
             onPress={this.signIn}/>
 
           <Link
-            style={styles.link}
             text={'Don\'t have an account? Sign Up'}
             onPress={this.createAccount}/>  
+            
         </View>
 
       </View>

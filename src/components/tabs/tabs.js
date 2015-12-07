@@ -21,7 +21,7 @@ var Tabs = React.createClass({
 
   getInitialState: function(){
     return {
-      selectedTab : 'activityTab'
+      selectedTab : 'profileTab'
     }
   },
 
@@ -29,8 +29,8 @@ var Tabs = React.createClass({
     return (
       <TabBarIOS
         selectedTab={this.state.selectedTab}
-        tintColor={'#c1d82f'}
-        barTintColor={'#000000'}
+        tintColor={'#38454F'}
+        barTintColor={'#FFFFFF'}
         styles={styles.tabBar}>
         <TabBarIOS.Item
             iconName={'ion|ios-paper'}

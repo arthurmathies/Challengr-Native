@@ -4,6 +4,7 @@
 var React = require('react-native');
 var { Icon } = require('react-native-icons');
 var _ = require('lodash');
+var Moment = require('moment');
 
 var {
   StyleSheet,
@@ -14,7 +15,6 @@ var {
 } = React;
 
 var API = require('../../api/challenges/challenges');
-var Moment = require('moment');
 
 var ListChallenge = React.createClass({
 
