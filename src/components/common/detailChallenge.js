@@ -15,22 +15,20 @@ var {
 } = React;
 
 var Button = require('./button');
-var Moment = require('moment');
 var API = require('../../api/challenges/challenges');
+var Like = require('./challengeDetailIcons/like');
+var Money = require('./challengeDetailIcons/money');
+var Time = require('./challengeDetailIcons/time');
 
 var DetailChallenge = React.createClass({
 
+  propTypes: {
+    challenge: React.PropTypes.object.isRequired,
+    token: React.PropTypes.string.isRequired,
+  },
+
   getInitialState: function(){
-    // are these all needed as state? or can they stay on props as single source of truth
     return {
-      title: this.props.challenge.title,
-      type: this.props.challenge.type,
-      challenger: this.props.challenge.Challenger,
-      challenged: this.props.challenge.Challenged,
-      description: this.props.challenge.description,
-      charityAmount: this.props.challenge.charityAmount,
-      expiresDate: this.props.challenge.expiresDate,
-      issuedDate: this.props.challenge.issuedDate,
       likes: this.props.challenge.likes,
     };
   },
@@ -47,65 +45,34 @@ var DetailChallenge = React.createClass({
 
   _renderHeader: function(){
 
-    var issue = Moment(this.state.issuedDate);
-    var expire = Moment(this.state.expiresDate);
-
     return(
       <View style={styles.header}>
 
         <View style={styles.images}>
           <Image 
             style={styles.challengedPhoto}
-            source={{uri: this.state.challenged.photoURL}} />
-
+            source={{uri: this.props.challenge.Challenged.photoURL}} />
           <Image 
             style={styles.challengerPhoto}
-            source={{uri: this.state.challenger.photoURL}} />
+            source={{uri: this.props.challenge.Challenger.photoURL}} />
         </View>
 
-        <View style={styles.iconText}>
-          <Icon
-          name='material|time'
-          size={15}
-          style={styles.icon} />
-          <Text style={styles.socialText}>{expire.fromNow()}</Text>
-        </View>
+        <Time
+          id={this.props.challenge.id}
+          issuedDate={this.props.challenge.issuedDate}
+          expiresDate={this.props.challenge.expiresDate} />
 
-        <View style={styles.iconText}>
-          <Icon
-            name='material|money'
-            size={15}
-            style={styles.icon} />
-          <Text style={styles.socialText}>{this.state.charityAmount * 100 + '\u00A2'}</Text>
-        </View>
+        <Money
+          id={this.props.challenge.id}
+          charityAmount={this.props.challenge.charityAmount} />
 
-        <TouchableHighlight
-          onPress={() => this.increaseLike(this.props.challenge)}
-          style={styles.iconText}
-          underlayColor='transparent'>
-          <View style={styles.iconText}>
-            {this.renderHeartIcon()}
-            <Text style={styles.socialText}>{this.state.likes}</Text>
-          </View>
-        </TouchableHighlight>
+        <Like
+          id={this.props.challenge.id}
+          likes={this.props.challenge.likes}
+          token={this.props.token} />
 
       </View>
     )
-  },
-
-  renderHeartIcon: function(){
-    if (this.state.likes > 0) {
-      return (<Icon
-      name='material|favorite'
-      size={15}
-      color={'red'}
-      style={styles.icon} />);
-    } else {
-      return (<Icon
-      name='material|favorite-outline'
-      size={15}
-      style={styles.icon} />);
-    }
   },
 
   _renderMain: function(){
@@ -114,8 +81,8 @@ var DetailChallenge = React.createClass({
         automaticallyAdjustContentInsets={false}
         scrollEventThrottle={200}
         style={styles.main}>
-        <Text style={styles.textHeader}>{this.state.type}</Text>
-        <Text style={styles.textParagraph}>{this.state.description}</Text>
+        <Text style={styles.textHeader}>{this.props.challenge.type}</Text>
+        <Text style={styles.textParagraph}>{this.props.challenge.description}</Text>
       </ScrollView>
     )
   },
@@ -142,23 +109,6 @@ var DetailChallenge = React.createClass({
         }},
       ]
     );
-  },
-
-  increaseLike: function(challenge){
-    var updateObj = {
-      id: challenge.id,
-      likes: this.state.likes + 1, 
-    };
-
-    API.updateChallenge(this.props.token, updateObj)
-    .then(function(resp) {
-      if(resp.success === true) {
-        this.setState({
-          likes: this.state.likes + 1,
-        });
-      }
-    }.bind(this))
-    .done();
   },
 
 });
@@ -198,23 +148,6 @@ var styles = StyleSheet.create({
     alignSelf: 'center',
   },
 
-  socialText: {
-    alignSelf: 'center',
-    color: '#546979',
-    fontSize: 14,
-    paddingLeft: 3,
-  },
-  iconText: {
-    alignSelf: 'center',
-    flexDirection: 'row',
-  },
-
-  // icon
-  icon: {
-    width: 15,
-    height: 15,
-  },
-
   // Main
   main: {
     flex: 2,
@@ -228,7 +161,7 @@ var styles = StyleSheet.create({
     marginBottom: 49,
   },
 
-  // TExt
+  // Text
   textHeader: {
     color: 'rgba(84, 105, 121, 1)',
     fontSize: 22,

@@ -66,6 +66,11 @@ var Link = require('');
 
 var Component = React.createClass({
 
+  // Validation
+  propTypes: {
+    user: React.PropTypes.object.isRequired
+  },
+
   componentDidMount: function(){
     var self = this;
     self.setState({ isLoading: true });
@@ -133,11 +138,6 @@ var Component = React.createClass({
   }
 
 });
-
-// Validation
-Component.propTypes = {
-  // user: React.PropTypes.object.isRequired
-};
 
 var styles = StyleSheet.create({
 

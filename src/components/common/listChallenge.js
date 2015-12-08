@@ -15,8 +15,18 @@ var {
 } = React;
 
 var API = require('../../api/challenges/challenges');
+var Like = require('./challengeDetailIcons/like');
+var Money = require('./challengeDetailIcons/money');
+var Time = require('./challengeDetailIcons/time');
 
 var ListChallenge = React.createClass({
+  
+  // Validation
+  propTypes: {
+    rowData: React.PropTypes.object.isRequired,
+    showDetailView: React.PropTypes.func.isRequired,
+    token: React.PropTypes.string.isRequired,
+  },
 
   getInitialState: function() {
     return {
@@ -26,16 +36,13 @@ var ListChallenge = React.createClass({
 
   render: function() {
 
-    var issue = Moment(this.props.rowData.issuedDate);
-    var expire = Moment(this.props.rowData.expiresDate);
-
     var title = _.trunc(this.props.rowData.title, 40);
     var description = _.trunc(this.props.rowData.description, 40);
 
     return (
       <TouchableHighlight 
         onPress={() => this.props.showDetailView(this.props.rowData)}
-        key={this.props.rowData.id}
+        // key={this.props.rowData.id}
         underlayColor='transparent'
         style={styles.row}>
         <View style={styles.rowContainer}>
@@ -54,30 +61,19 @@ var ListChallenge = React.createClass({
 
             <View style={styles.rowSocial}>
 
-              <View style={styles.iconText}>
-                <Icon
-                name='material|time'
-                size={15}
-                style={styles.icon} />
-                <Text style={styles.rowSocialText}>{expire.fromNow()}</Text>
-              </View>
+              <Time
+                id={this.props.rowData.id}
+                issuedDate={this.props.rowData.issuedDate}
+                expiresDate={this.props.rowData.expiresDate} />
 
-              <View style={styles.iconText}>
-                <Icon
-                  name='material|money'
-                  size={15}
-                  style={styles.icon} />
-                <Text style={styles.rowSocialText}>{this.props.rowData.charityAmount * 100 + '\u00A2'}</Text>
-              </View>
+              <Money
+                id={this.props.rowData.id}
+                charityAmount={this.props.rowData.charityAmount} />
 
-              <TouchableHighlight
-                onPress={() => this.increaseLike(this.props.rowData)}
-                underlayColor='transparent'>
-                <View style={styles.iconText}>
-                  {this.renderHeartIcon()}
-                  <Text style={styles.rowSocialText}>{this.state.likes} likes</Text>
-                </View>
-              </TouchableHighlight>
+              <Like
+                id={this.props.rowData.id}
+                likes={this.props.rowData.likes}
+                token={this.props.token} />
 
             </View>
           </View>
@@ -119,13 +115,6 @@ var ListChallenge = React.createClass({
   },
 
 });
-
-// Validation
-ListChallenge.propTypes = {
-  rowData: React.PropTypes.object.isRequired,
-  showDetailView: React.PropTypes.func.isRequired,
-  token: React.PropTypes.string.isRequired,
-}
 
 var styles = StyleSheet.create({
   row: {

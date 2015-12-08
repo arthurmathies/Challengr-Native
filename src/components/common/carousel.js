@@ -20,6 +20,7 @@ var PAGE_CHANGE_DELAY = 4000;
  * (loop possible if children count > 1)
 */
 var Carousel = React.createClass({
+
   propTypes:{
     children: React.PropTypes.node.isRequired,
     delay: React.PropTypes.number,
@@ -28,13 +29,16 @@ var Carousel = React.createClass({
     contentContainerStyle: View.propTypes.style,
     autoplay: React.PropTypes.bool,
   },
+
   mixins: [TimerMixin],
+
   getDefaultProps: function() {
     return {
       delay: PAGE_CHANGE_DELAY,
       autoplay: false
     };
   },
+
   getInitialState: function() {
     if (!!this.props.children) {
       var childrenCount = this.props.children.length;
@@ -51,14 +55,17 @@ var Carousel = React.createClass({
       }
     }
   },
+
   componentDidMount:function(){
     if (this.state.hasChildren) {
       this._setUpTimer();
     }
   },
+
   _onScrollBegin: function(event) {
     this.clearTimeout(this.timer);
   },
+
   _onScrollEnd: function(event) {
     this._setUpTimer();
 
@@ -75,6 +82,7 @@ var Carousel = React.createClass({
     this._calculateCurrentPage(offset.x);
     this.setState({contentOffset: offset});
   },
+
   _onLayout: function() {
     let self = this;
     this.refs.container.measure(function(x, y, w, h, px, py) {
@@ -84,6 +92,7 @@ var Carousel = React.createClass({
       });
     });
   },
+
   _setUpTimer: function() {
     //only for cycling
     if (this.props.autoplay && this.props.children.length > 1) {
@@ -91,6 +100,7 @@ var Carousel = React.createClass({
       this.timer = this.setTimeout(this._animateNextPage, this.props.delay);
     }
   },
+
   _animateNextPage: function() {
     var k = this.state.currentPage;
     var size = this.state.size;
@@ -100,11 +110,13 @@ var Carousel = React.createClass({
     this.refs.scrollView.scrollTo(0, k*size.width);
     this._setUpTimer();
   },
+
   _calculateCurrentPage: function(offset) {
     var size = this.state.size;
     var page = Math.floor((offset - size.width/2) / size.width) + 1;
     this.setState({currentPage: page});
   },
+
   //TODO: add optional `dots` for displaying current page (like pageControl)
   render: function() {
     var pages = [],
@@ -174,8 +186,7 @@ var Carousel = React.createClass({
             width: size.width*(this.props.children.length+(this.props.children.length>1?2:0)),
             height: size.height
           }
-        ]}
-      >
+        ]}>
         {pages}
       </ScrollView>);
       return (
