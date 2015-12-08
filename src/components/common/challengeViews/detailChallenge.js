@@ -14,11 +14,11 @@ var {
   AlertIOS,
 } = React;
 
-var Button = require('./button');
-var API = require('../../api/challenges/challenges');
-var Like = require('./challengeDetailIcons/like');
-var Money = require('./challengeDetailIcons/money');
-var Time = require('./challengeDetailIcons/time');
+var Button = require('../basicComponents/button');
+var API = require('../../../api/challenges/challenges');
+var Like = require('../challengeDetailIcons/like');
+var Money = require('../challengeDetailIcons/money');
+var Time = require('../challengeDetailIcons/time');
 
 var DetailChallenge = React.createClass({
 

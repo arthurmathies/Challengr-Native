@@ -20,11 +20,16 @@ var {
   Image,
 } = React;
 
-var Button = require('../../common/button');
+var Button = require('../../common/basicComponents/button');
 var API = require('../../../api/braintree/braintree');
 var Moment = require('moment');
 
 var Settings = React.createClass({
+
+  // Validation
+  propTypes: {
+    user: React.PropTypes.object.isRequired
+  },
 
   componentDidMount: function(){
 

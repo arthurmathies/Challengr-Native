@@ -17,8 +17,8 @@ var {
 } = React;
 
 var API = require('../../../api/challenges/challenges');
-var DetailChallenge = require('../../common/detailChallenge');
-var ListChallenge = require('../../common/listChallenge');
+var DetailChallenge = require('../../common/challengeViews/detailChallenge');
+var ListChallenge = require('../../common/challengeViews/listChallenge');
 var Settings = require('./settings');
 
 var Profile = React.createClass({
@@ -198,7 +198,10 @@ var Profile = React.createClass({
     this.props.navigator.push({
       title: challenge.title,
       component: DetailChallenge,
-      passProps: {challenge: challenge}
+      passProps: {
+        challenge: challenge,
+        token: this.state.token,
+      },
     });
   },
 

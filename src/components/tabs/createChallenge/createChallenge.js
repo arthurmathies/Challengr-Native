@@ -13,7 +13,7 @@ var {
   PickerIOS,
 } = React;
 
-var Button = require('../../common/button');
+var Button = require('../../common/basicComponents/button');
 var Charity = require('./charity');
 
 var CHALLENGE_TYPES = ['basketball', 'education', 'gym', 'drinking'];

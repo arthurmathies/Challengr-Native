@@ -16,28 +16,32 @@ var {
 } = React;
 
 var API = require('../../../api/challenges/challenges');
-var DetailChallenge = require('../../common/detailChallenge');
-var ListChallenge = require('../../common/listChallenge');
+var DetailChallenge = require('../../common/challengeViews/detailChallenge');
+var ListChallenge = require('../../common/challengeViews/listChallenge');
 
 var Activity = React.createClass({
 
   componentDidMount: function(){
-    var self = this;
     // Loader
-    self.state.isLoading = true;
+    this.setState({
+      isLoading: true
+    });
     // Async Storage
     AsyncStorage.getItem('token')
       .then((token) => {
         // API
         API.getAllChallenges(token)
-          .then(function(challenges){
+          .then((challenges) => {
             console.log('all challenges : ', challenges);
             // Loader
-            self.state.isLoading = false;
-
-            self.state.token = token;
-            self.setState({
-              dataSource: self.getDataSource(challenges),
+            this.setState({
+              isLoading: false,
+            });
+            this.setState({
+              token: token,
+            });
+            this.setState({
+              dataSource: this.getDataSource(challenges),
             });
           })
           .done();
@@ -48,7 +52,6 @@ var Activity = React.createClass({
   getInitialState: function(){
     return {
       isLoading: false,
-      photoURL: '',
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
@@ -99,7 +102,7 @@ var Activity = React.createClass({
 
   getDataSource: function(challenges: Array<any>): ListView.DataSource{
     return this.state.dataSource.cloneWithRows(challenges);
-  }
+  },
 
 });
 

@@ -14,10 +14,10 @@ var {
   Text,
 } = React;
 
-var API = require('../../api/challenges/challenges');
-var Like = require('./challengeDetailIcons/like');
-var Money = require('./challengeDetailIcons/money');
-var Time = require('./challengeDetailIcons/time');
+var API = require('../../../api/challenges/challenges');
+var Like = require('../challengeDetailIcons/like');
+var Money = require('../challengeDetailIcons/money');
+var Time = require('../challengeDetailIcons/time');
 
 var ListChallenge = React.createClass({
   
