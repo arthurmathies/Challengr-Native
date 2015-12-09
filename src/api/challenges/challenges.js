@@ -42,6 +42,7 @@ var ChallengeAPI = {
 
     return API.postJSON(challengesURL, 'PUT', challengeObj)
       .then(function(json) {
+        console.log("hey");
         return json;
       })
       .catch(function(err) {

@@ -63,7 +63,7 @@ var Like = React.createClass({
 
     API.updateChallenge(updateObj)
     .then((resp) => {
-      if(resp.success === true) {
+      if(resp.success) {
         this.setState({
           likes: likes + 1,
         });
