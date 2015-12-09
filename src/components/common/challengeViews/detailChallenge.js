@@ -10,6 +10,7 @@ var {
   Text,
   Image,
   ScrollView,
+  AsyncStorage,
   TouchableHighlight,
   AlertIOS,
 } = React;
@@ -24,12 +25,22 @@ var DetailChallenge = React.createClass({
 
   propTypes: {
     challenge: React.PropTypes.object.isRequired,
-    token: React.PropTypes.string.isRequired,
+  },
+
+  componentDidMount: function(){
+    AsyncStorage.getItem('email')
+      .then((email) => {
+        this.setState({
+          userEmail: email,
+        });
+      })
+      .done();
   },
 
   getInitialState: function(){
     return {
-      likes: this.props.challenge.likes,
+      userEmail: '',
+      challengeCompleted: this.props.challenge.completed, 
     };
   },
 
@@ -68,8 +79,7 @@ var DetailChallenge = React.createClass({
 
         <Like
           id={this.props.challenge.id}
-          likes={this.props.challenge.likes}
-          token={this.props.token} />
+          likes={this.props.challenge.likes} />
 
       </View>
     )
@@ -88,27 +98,43 @@ var DetailChallenge = React.createClass({
   },
 
   _renderFooter: function(){
-    return(
-      <View style={styles.footer}>
-        <Button
-          icon={false}
-          text={'Challenge Completed'}
-          onPress={this.challengeCompleted}/>
-      </View>
-    )
+    if(this.state.userEmail === this.props.challenge.Challenged.email && !this.state.challengeCompleted && !this.props.challenge.notCompleted){
+      return(
+        <View style={styles.footer}>
+          <Button
+            icon={false}
+            text={'Challenge Completed'}
+            onPress={this._challengeCompleted}/>
+        </View>
+      );
+    }
   },
 
-  challengeCompleted: function(){
+  _challengeCompleted: function(){
     AlertIOS.alert(
       'Have you really completed the challenge?',
       null,
       [
         {text: 'Cancel', onPress: () => console.log('Challenge Completion cancelled')},
-        {text: 'Yes', onPress: () => {
-          console.log('complete the challenge...');
-        }},
+        {text: 'Yes', onPress: this._markCompleted},
       ]
     );
+  },
+
+  _markCompleted: function(){
+    var updateObj = {
+      id: this.props.challenge.id,
+      completed: true,
+    };
+    API.updateChallenge(updateObj)
+    .then((resp) => {
+      if(resp.success){
+        this.setState({
+          challengeCompleted: true,
+        });
+      }
+    })
+    .done();
   },
 
 });

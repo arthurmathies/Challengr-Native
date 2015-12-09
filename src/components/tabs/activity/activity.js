@@ -9,7 +9,6 @@ var {
   View,
   Text,
   ListView,
-  AsyncStorage,
   TouchableHighlight,
   ActivityIndicatorIOS,
   Image,
@@ -26,27 +25,23 @@ var Activity = React.createClass({
     this.setState({
       isLoading: true
     });
-    // Async Storage
-    AsyncStorage.getItem('token')
-      .then((token) => {
-        // API
-        API.getAllChallenges(token)
-          .then((challenges) => {
-            console.log('all challenges : ', challenges);
-            // Loader
-            this.setState({
-              isLoading: false,
-            });
-            this.setState({
-              token: token,
-            });
-            this.setState({
-              dataSource: this.getDataSource(challenges),
-            });
-          })
-          .done();
+    var poll = function (){
+      API.getAllChallenges()
+      .then((challenges) => {
+        // console.log('all challenges : ', challenges);
+        // Loader
+        this.setState({
+          isLoading: false,
+          dataSource: this.getDataSource(challenges),
+        });
       })
-      .done();
+      .done();      
+    }.bind(this);
+    poll();
+    this.setState({
+      interval: setInterval(poll, 10000),
+    });
+
   },
 
   getInitialState: function(){
@@ -55,6 +50,7 @@ var Activity = React.createClass({
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
+      interval: null,
     };
   },
 
@@ -75,8 +71,7 @@ var Activity = React.createClass({
   _renderRow: function(rowData){    
     return  <ListChallenge 
               rowData={rowData}
-              showDetailView={this._showDetailView}
-              token={this.state.token} />
+              showDetailView={this._showDetailView}/>
   },
 
   _showDetailView: function(challenge){
@@ -85,7 +80,6 @@ var Activity = React.createClass({
       component: DetailChallenge,
       passProps: {
         challenge: challenge,
-        token: this.state.token,
       },
     });
   },
@@ -102,6 +96,10 @@ var Activity = React.createClass({
 
   getDataSource: function(challenges: Array<any>): ListView.DataSource{
     return this.state.dataSource.cloneWithRows(challenges);
+  },
+
+  componentWillUnmount: function(){
+    clearInterval(this.state.interval);
   },
 
 });

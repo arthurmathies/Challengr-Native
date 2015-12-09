@@ -9,8 +9,6 @@ var {
 
 var {
   StyleSheet,
-  View,
-  Text,
 } = React;
 
 var CreateChallenge = require('./createChallenge/tabChallenge');
@@ -21,7 +19,7 @@ var Tabs = React.createClass({
 
   getInitialState: function(){
     return {
-      selectedTab : 'activityTab'
+      selectedTab : 'profileTab'
     }
   },
 

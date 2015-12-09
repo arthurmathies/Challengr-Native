@@ -25,7 +25,6 @@ var ListChallenge = React.createClass({
   propTypes: {
     rowData: React.PropTypes.object.isRequired,
     showDetailView: React.PropTypes.func.isRequired,
-    token: React.PropTypes.string.isRequired,
   },
 
   getInitialState: function() {
@@ -72,8 +71,7 @@ var ListChallenge = React.createClass({
 
               <Like
                 id={this.props.rowData.id}
-                likes={this.props.rowData.likes}
-                token={this.props.token} />
+                likes={this.props.rowData.likes} />
 
             </View>
           </View>
@@ -103,7 +101,7 @@ var ListChallenge = React.createClass({
       likes: this.state.likes + 1, 
     };
 
-    API.updateChallenge(this.props.token, updateObj)
+    API.updateChallenge(updateObj)
     .then(function(resp) {
       if(resp.success === true) {
         this.setState({

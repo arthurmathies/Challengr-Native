@@ -25,20 +25,13 @@ var ChooseFriend = React.createClass({
     this.setState({
       isLoading: true,
     });
-    AsyncStorage.getItem('token')
-      .then((token) => {
-        // API
-        API.getFriends(token)
-          .then((friends) => {
-            // Loader
-            this.setState({
-              isLoading: false,
-            });
-            this.setState({
-              dataSource: this.getDataSource(friends),
-            });
-          })
-          .done();
+    API.getFriends()
+      .then((friends) => {
+        // Loader
+        this.setState({
+          isLoading: false,
+          dataSource: this.getDataSource(friends),
+        });
       })
       .done();
   },
@@ -46,7 +39,9 @@ var ChooseFriend = React.createClass({
   getInitialState: function(){
     return {
       isLoading: false,
-      dataSource: new ListView.DataSource({ rowHasChanged: (row1, row2) => row1 !== row2 }),
+      dataSource: new ListView.DataSource({ 
+        rowHasChanged: (row1, row2) => row1 !== row2 
+      }),
       filter: '',
     }
   },

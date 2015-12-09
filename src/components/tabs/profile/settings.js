@@ -3,18 +3,12 @@
 
 var React = require('react-native');
 var { Icon } = require('react-native-icons');
-var _ = require('lodash');
-
-var TableView = require('react-native-tableview');
-var Section = TableView.Section;
-var Item = TableView.Item;
 
 var {
   StyleSheet,
   View,
   Text,
   ListView,
-  AsyncStorage,
   TouchableHighlight,
   ActivityIndicatorIOS,
   Image,
@@ -32,25 +26,17 @@ var Settings = React.createClass({
   },
 
   componentDidMount: function(){
-
-    var self = this;
     // Loader
-    self.state.isLoading = true;
-    // Async Storage
-    AsyncStorage.getItem('token')
-      .then((token) => {
-        // API
-        API.getTransactions(token)
-          .then(function(data){
-            console.log('transactions : ', data.transactions);
-            // Loader
-            self.state.isLoading = false;
-            // State
-            self.setState({
-              dataSource: self.getDataSource(data.transactions),
-            })
-          })
-
+    this.setState({
+      isLoading: true,
+    });
+    API.getTransactions()
+      .then((data) => {
+        this.setState({
+          // Loader
+          isLoading: false,
+          dataSource: this.getDataSource(data.transactions),
+        });
       })
       .done();
   },
@@ -58,7 +44,9 @@ var Settings = React.createClass({
   getInitialState: function(){
     return {
       isLoading: false,
-      dataSource: new ListView.DataSource({ rowHasChanged: (row1, row2) => row1 !== row2 }),
+      dataSource: new ListView.DataSource({ 
+        rowHasChanged: (row1, row2) => row1 !== row2 
+      }),
     }
   },
 
@@ -79,7 +67,6 @@ var Settings = React.createClass({
             <TouchableHighlight
               onPress={() => this.changeName()}
               underlayColor='transparent'>
-
               <View style={styles.cell}>
                 <Text style={styles.textParagraph}>{name}</Text>
                 <Icon
@@ -91,7 +78,6 @@ var Settings = React.createClass({
             <TouchableHighlight
               onPress={() => this.selectTransaction()}
               underlayColor='transparent'>
-
               <View style={styles.cell}>
                 <Text>{email}</Text>
                 <Icon

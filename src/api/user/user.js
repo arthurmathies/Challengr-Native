@@ -5,8 +5,8 @@ var userFriendsURL = `${API.rootUrl}user/`;
 
 var UserAPI = {
 
-  getFriends: function(token){
-    return API.fetchJSON(userFriendsURL, token)      
+  getFriends: function(){
+    return API.fetchJSON(userFriendsURL)      
       .then(function(json){
         return json;
       });
