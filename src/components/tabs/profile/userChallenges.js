@@ -29,23 +29,31 @@ var Profile = React.createClass({
       isLoading: true
     });
     // API
-    API.getMyChallenges()
-      .then((myChallenges) => {
-        this.setState({
-          // Loader
-          isLoading: false,
-          myChallenges: this.getMyChallenges(myChallenges),
-        });
-      })
-      .done();
+    var poll = function(){
+      API.getMyChallenges()
+        .then((myChallenges) => {
+          this.setState({
+            // Loader
+            isLoading: false,
+            myChallenges: this.getMyChallenges(myChallenges),
+          });
+        })
+        .done();
 
-    API.getImposedChallenges()
-      .then((imposedChallenges) => {
-        this.setState({
+      API.getImposedChallenges()
+        .then((imposedChallenges) => {
+          this.setState({
           imposedChallenges: this.getImposedChallenges(imposedChallenges),
-        });
-      })
-      .done();
+          });
+        })
+        .done();  
+    }.bind(this);
+    // start polling
+    poll();
+    this.setState({
+      interval: setInterval(poll, 10000),
+    });
+
   },
 
   getInitialState: function(){
@@ -58,6 +66,7 @@ var Profile = React.createClass({
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
       segment: 'My Challenges',
+      interval: null,
     };
   },
 

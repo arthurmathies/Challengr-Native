@@ -25,7 +25,8 @@ var Activity = React.createClass({
     this.setState({
       isLoading: true
     });
-    API.getAllChallenges()
+    var poll = function (){
+      API.getAllChallenges()
       .then((challenges) => {
         // console.log('all challenges : ', challenges);
         // Loader
@@ -34,7 +35,13 @@ var Activity = React.createClass({
           dataSource: this.getDataSource(challenges),
         });
       })
-      .done();
+      .done();      
+    }.bind(this);
+    poll();
+    this.setState({
+      interval: setInterval(poll, 10000),
+    });
+
   },
 
   getInitialState: function(){
@@ -43,6 +50,7 @@ var Activity = React.createClass({
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
+      interval: null,
     };
   },
 
@@ -88,6 +96,10 @@ var Activity = React.createClass({
 
   getDataSource: function(challenges: Array<any>): ListView.DataSource{
     return this.state.dataSource.cloneWithRows(challenges);
+  },
+
+  componentWillUnmount: function(){
+    clearInterval(this.state.interval);
   },
 
 });
