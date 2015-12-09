@@ -2,10 +2,6 @@
 'use strict';
 
 var React = require('react-native');
-var RNFS = require('react-native-fs');
-
-var path = RNFS.DocumentDirectoryPath;
-var path2 = RNFS.MainBundlePath;
 
 var {
   StyleSheet,
@@ -25,23 +21,24 @@ var CreateChallenge = require('./createChallenge');
 var ChooseFriend = React.createClass({
 
   componentDidMount: function(){
-    var self = this;
     // Loader
-    self.state.isLoading = true;
-    // Async Storage
+    this.setState({
+      isLoading: true,
+    });
     AsyncStorage.getItem('token')
       .then((token) => {
         // API
         API.getFriends(token)
-          .then(function(friends){
+          .then((friends) => {
             // Loader
-            self.state.isLoading = false;
-            // State
-            self.setState({
-              dataSource: self.getDataSource(friends),
-            })
+            this.setState({
+              isLoading: false,
+            });
+            this.setState({
+              dataSource: this.getDataSource(friends),
+            });
           })
-
+          .done();
       })
       .done();
   },
@@ -55,10 +52,6 @@ var ChooseFriend = React.createClass({
   },
 
   render: function() {
-
-    console.log('PATH : ', path);
-    console.log('PATH 2: ', path2);
-
     return (
       <View style={styles.container}>
         <SearchBar

@@ -2,7 +2,6 @@
 'use strict';
 
 var React = require('react-native');
-var Carousel = require('../../common/carousel');
 var Dimensions = require('Dimensions');
 var {width, height} = Dimensions.get('window');
 var _ = require('lodash');
@@ -20,7 +19,8 @@ var {
 } = React;
 
 var API = require('../../../api/charity/charity');
-var Link = require('../../common/link');
+var Link = require('../../common/basicComponents/link');
+var Carousel = require('../../common/basicComponents/carousel');
 
 var Charity = React.createClass({
 

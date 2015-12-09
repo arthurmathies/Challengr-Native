@@ -21,7 +21,7 @@ var Tabs = React.createClass({
 
   getInitialState: function(){
     return {
-      selectedTab : 'profileTab'
+      selectedTab : 'activityTab'
     }
   },
 

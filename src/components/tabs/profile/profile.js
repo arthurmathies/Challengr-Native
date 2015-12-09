@@ -14,23 +14,25 @@ var {
   ListView,
   TouchableHighlight,
   ActivityIndicatorIOS,
+  SegmentedControlIOS,
 } = React;
 
 var API = require('../../../api/challenges/challenges');
-var DetailChallenge = require('../../common/detailChallenge');
-var ListChallenge = require('../../common/listChallenge');
+var DetailChallenge = require('../../common/challengeViews/detailChallenge');
+var ListChallenge = require('../../common/challengeViews/listChallenge');
 var Settings = require('./settings');
 
 var Profile = React.createClass({
 
   componentDidMount: function(){
-    var self = this;
     // Loader
-    self.state.isLoading = true;
+    this.setState({
+      isLoading: true
+    });
     // Async Storage
     AsyncStorage.multiGet(['id', 'email', 'firstName', 'lastName', 'photoURL', 'token'])
       .then((valArr) => {
-        self.setState({
+        this.setState({
           email: valArr[1][1],
           firstName: valArr[2][1],
           lastName: valArr[3][1],
@@ -38,17 +40,28 @@ var Profile = React.createClass({
           token: valArr[5][1],
         });
         var token = valArr[5][1];
-        // API
-        API.getUserChallenges(token)
-          .then(function(challenges){
-            // Loader
-            self.state.isLoading = false;
-            // State
-            self.setState({
-              dataSource: self.getDataSource(challenges),
-            })
-          })
 
+        // remodularize these two challenge API calls to use the same and pass URL
+        // API
+        API.getMyChallenges(token)
+          .then((myChallenges) => {
+            this.setState({
+              // Loader
+              isLoading: false,
+              myChallenges: this.getMyChallenges(myChallenges),
+            });
+          })
+          .done();
+
+        API.getImposedChallenges(token)
+          .then((imposedChallenges) => {
+            this.setState({
+              // Loader
+              isLoading: false,
+              imposedChallenges: this.getImposedChallenges(imposedChallenges),
+            });
+          })
+          .done();
       })
       .done();
   },
@@ -61,10 +74,14 @@ var Profile = React.createClass({
       firstName: '',
       lastName: '',
       photoURL: '',
-      dataSource: new ListView.DataSource({
+      myChallenges: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
-    }
+      imposedChallenges: new ListView.DataSource({
+        rowHasChanged: (row1, row2) => row1 !== row2,
+      }),
+      segment: 'My Challenges',
+    };
   },
 
   render: function() {
@@ -76,6 +93,8 @@ var Profile = React.createClass({
     );
   },
 
+  // remodularize into own component file is way too big
+  // PROFILE INFO
   profileInfo: function(){
 
     var fName = _.capitalize(this.state.firstName);
@@ -94,12 +113,18 @@ var Profile = React.createClass({
             style={{width: 30, height: 30}}
           />
         </TouchableHighlight> 
-        <View style={styles.headerMiddle}>
-          <Image 
-            style={styles.photo}
-            source={{uri: this.state.photoURL}} />
-          <Text style={styles.profileText}>{fName} {lName}</Text>
-        </View>
+          <View style={styles.headerMiddle}>
+            <TouchableHighlight
+            onPress={this._changePhoto}
+            underlayColor={'transparent'}>
+              <View>
+                <Image 
+                  style={styles.photo}
+                  source={{uri: this.state.photoURL}} />
+              </View>
+            </TouchableHighlight>
+            <Text style={styles.profileText}>{fName} {lName}</Text>
+          </View>
         <TouchableHighlight 
           style={styles.headerRight}
           onPress={this._changePhoto}
@@ -173,18 +198,50 @@ var Profile = React.createClass({
     });
   },
 
+  // remodularize into own component file is way too big
+  // CHALLENGES
   userChallenges: function(){
-    return (      
-      <ListView
-        ref="listview"
-        style={styles.footer}
-        renderSeparator={this._renderSeparator}
-        automaticallyAdjustContentInsets={false}
-        dataSource={this.state.dataSource}
-        renderFooter={this._renderFooter}
-        renderRow={this._renderRow}
-      />
+    return (
+      <View
+        style={styles.footer}>
+        <SegmentedControlIOS
+          tintColor='rgba(218, 218, 218, 1)'
+          values={['My Challenges', 'Imposed Challenges']}
+          selectedIndex={0}
+          onValueChange={this._changeSegment} />
+          {this._renderSegment()}
+      </View>
     );
+  },
+
+  _changeSegment: function(segment){
+    this.setState({
+      segment: segment,
+    });
+  },
+
+  _renderSegment: function() {
+    if(this.state.segment === 'My Challenges'){
+      return (
+        <ListView
+          ref="listview"
+          renderSeparator={this._renderSeparator}
+          automaticallyAdjustContentInsets={false}
+          dataSource={this.state.myChallenges}
+          renderFooter={this._renderFooter}
+          renderRow={this._renderRow} />
+          );
+    }else{
+      return (
+        <ListView
+          ref="listview"
+          renderSeparator={this._renderSeparator}
+          automaticallyAdjustContentInsets={false}
+          dataSource={this.state.imposedChallenges}
+          renderFooter={this._renderFooter}
+          renderRow={this._renderRow} />
+        );
+    }
   },
 
   _renderRow: function(rowData){
@@ -198,7 +255,10 @@ var Profile = React.createClass({
     this.props.navigator.push({
       title: challenge.title,
       component: DetailChallenge,
-      passProps: {challenge: challenge}
+      passProps: {
+        challenge: challenge,
+        token: this.state.token,
+      },
     });
   },
 
@@ -212,9 +272,13 @@ var Profile = React.createClass({
     }
   },
 
-  getDataSource: function(challenges: Array<any>): ListView.DataSource{
-    return this.state.dataSource.cloneWithRows(challenges);
-  }
+  getMyChallenges: function(myChallenges){
+    return this.state.myChallenges.cloneWithRows(myChallenges);
+  },
+
+  getImposedChallenges: function(imposedChallenges){
+    return this.state.imposedChallenges.cloneWithRows(imposedChallenges);
+  },
 
 });
 
@@ -233,10 +297,11 @@ var styles = StyleSheet.create({
   header: {
     flex: 1,
     padding: 10,
-    backgroundColor: 'EEAF4B',
+    backgroundColor: '#47A0DB',
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
+    marginBottom: 2,
   },
   headerLeft: {
     width: 50,
@@ -280,7 +345,10 @@ var styles = StyleSheet.create({
     backgroundColor: 'rgba(216, 216, 216, 1)',
     height: 1,
     marginLeft: 80,
-  }
+  },
+  segmentedControl: {
+    marginTop: 10,
+  },
 });
 
 module.exports = Profile;

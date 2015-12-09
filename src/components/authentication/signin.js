@@ -12,8 +12,8 @@ var {
   Image,
 } = React;
 
-var Button = require('../common/button');
-var Link = require('../common/link');
+var Button = require('../common/basicComponents/button');
+var Link = require('../common/basicComponents/link');
 var API = require('../../api/auth/auth.js');
 
 module.exports = React.createClass({  
