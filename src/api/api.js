@@ -1,9 +1,17 @@
+var React = require('react-native');
+
+var {
+  AsyncStorage
+} = React;
+
 module.exports = {
 
   rootUrl: 'http://localhost:3000/api/',
 
-  fetchJSON: function(url, token){
-    return fetch(url, {
+  fetchJSON: function(url){
+    return AsyncStorage.getItem('token')
+    .then((token) => {
+      return fetch(url, {
         method: 'GET',
         headers: {
           'Accept': 'application/json',
@@ -13,11 +21,13 @@ module.exports = {
         }
       })
       .then((response) => response.json())
+    });
   },
 
   postJSON: function(url, method, body, token){
-    console.log('body : ', body);
-    return fetch(url, {
+    return AsyncStorage.getItem('token')
+    .then((token) => {
+      return fetch(url, {
         method: method,
         headers: {
           'Accept': 'application/json',
@@ -27,7 +37,8 @@ module.exports = {
         },
         body: body
       })
-      .then((response) => response.json())
+      .then((response) => response.json());
+    });
   },
 
 };

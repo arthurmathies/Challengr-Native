@@ -18,7 +18,6 @@ var Like = React.createClass({
   propTypes: {
     likes: React.PropTypes.number.isRequired,
     id: React.PropTypes.number.isRequired,
-    token: React.PropTypes.string.isRequired,
   },
 
   getInitialState: function(){
@@ -62,7 +61,7 @@ var Like = React.createClass({
       likes: likes + 1, 
     };
 
-    API.updateChallenge(this.props.token, updateObj)
+    API.updateChallenge(updateObj)
     .then((resp) => {
       if(resp.success === true) {
         this.setState({

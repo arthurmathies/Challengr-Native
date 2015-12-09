@@ -5,8 +5,8 @@ var charityURL = `${API.rootUrl}charity/`;
 
 var CharityAPI = {
 
-  getCharities: function(token){
-    return API.fetchJSON(charityURL, token)      
+  getCharities: function(){
+    return API.fetchJSON(charityURL)      
       .then(function(json){
         return json;
       })

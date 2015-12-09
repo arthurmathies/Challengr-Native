@@ -7,8 +7,8 @@ var imposedChallengesURL = `${API.rootUrl}challenge/imposed/`;
 
 var ChallengeAPI = {
 
-  getMyChallenges: function(token) {
-    return API.fetchJSON(myChallengesURL, token)
+  getMyChallenges: function() {
+    return API.fetchJSON(myChallengesURL)
       .then(function(json) {
         return json;
       })
@@ -17,8 +17,8 @@ var ChallengeAPI = {
       });
   },
 
-  getImposedChallenges: function(token) {
-    return API.fetchJSON(imposedChallengesURL, token)
+  getImposedChallenges: function() {
+    return API.fetchJSON(imposedChallengesURL)
       .then(function(json) {
         return json;
       })
@@ -27,8 +27,8 @@ var ChallengeAPI = {
       });
   },
 
-  getAllChallenges: function(token) {
-    return API.fetchJSON(challengesURL, token)
+  getAllChallenges: function() {
+    return API.fetchJSON(challengesURL)
       .then(function(json) {
         return json;
       })
@@ -37,10 +37,10 @@ var ChallengeAPI = {
       });
   },
 
-  updateChallenge: function(token, obj) {
+  updateChallenge: function(obj) {
     var challengeObj = JSON.stringify(obj);
 
-    return API.postJSON(challengesURL, 'PUT', challengeObj, token)
+    return API.postJSON(challengesURL, 'PUT', challengeObj)
       .then(function(json) {
         return json;
       })

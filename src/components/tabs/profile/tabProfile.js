@@ -5,8 +5,6 @@ var React = require('react-native');
 
 var {
   StyleSheet,
-  View,
-  Text,
   NavigatorIOS,
 } = React;
 
@@ -16,7 +14,7 @@ var TabProfile = React.createClass({
   render: function() {
     return (
       <NavigatorIOS
-        navigationBarHidden={true}
+        navigationBarHidden={false}
         tintColor={'#FFFFFF'}
         titleTextColor={'#FFFFFF'}
         barTintColor={'#47A0DB'}

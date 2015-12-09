@@ -24,7 +24,6 @@ var DetailChallenge = React.createClass({
 
   propTypes: {
     challenge: React.PropTypes.object.isRequired,
-    token: React.PropTypes.string.isRequired,
   },
 
   getInitialState: function(){
@@ -68,8 +67,7 @@ var DetailChallenge = React.createClass({
 
         <Like
           id={this.props.challenge.id}
-          likes={this.props.challenge.likes}
-          token={this.props.token} />
+          likes={this.props.challenge.likes} />
 
       </View>
     )

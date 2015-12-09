@@ -25,26 +25,25 @@ var Carousel = require('../../common/basicComponents/carousel');
 var Charity = React.createClass({
 
   componentDidMount: function(){
-    var self = this;
-    self.state.isLoading = true;
-    AsyncStorage.getItem('token')
-      .then((token) => {
-        API.getCharities(token)
-          .then(function(charities){
-            console.log('charities : ', charities);
-            self.state.isLoading = false;
-            self.setState({
-              charities: charities,
-            })
-          })
-      }).done();
+    this.setState({
+      isLoading: true,
+    });
+    API.getCharities()
+      .then((charities) => {
+        // console.log('charities : ', charities);
+        this.setState({
+          isLoading: false,
+          charities: charities,
+        });
+      })
+      .done();
   },
 
   getInitialState: function(){
     return {
       selectedCharity: '',
       isLoading: false,
-      charities: []
+      charities: [],
     }
   },
 
@@ -151,8 +150,7 @@ var styles = StyleSheet.create({
     color: 'rgba(84, 105, 121, 0.8)',
     fontSize: 16,
     textAlign: 'center',
-  }
-
+  },
 
 });
 
