@@ -10,6 +10,7 @@
 
 ##Technologies
 
+![](https://s3-us-west-2.amazonaws.com/challengrimages/placeholder/challengrMobileLG.png)
 ![](screenshots/react_native.png)
 
 ##Usage
