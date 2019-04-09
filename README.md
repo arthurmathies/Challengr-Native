@@ -19,9 +19,6 @@
   - Start the server
   - Open the project in Xcode and start the simulator
 
-## Screenshots
-  ![](screenshots/example.png)
-
 ## Contributors
   - Jordan Winkelman
   - Arthur Mathies
